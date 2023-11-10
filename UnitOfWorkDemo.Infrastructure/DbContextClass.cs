@@ -6,10 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnitOfWorkDemo.Core.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace UnitOfWorkDemo.Infrastructure
 {
-    public class DbContextClass : DbContext
+    public class DbContextClass : IdentityDbContext<IdentityUser>
     {
         public DbContextClass(DbContextOptions<DbContextClass> contextOptions) : base(contextOptions)
         {
