@@ -11,12 +11,14 @@ namespace UnitOfWorkDemo.Infrastructure.Repositories
     {
         private readonly DbContextClass _dbContext;
         public IPatientRepository Patient { get; }
+        public IPatientRecordRepository PatientRecord { get; }
 
         public UnitOfWork(DbContextClass dbContext,
-                            IPatientRepository PatientRepository)
+                            IPatientRepository PatientRepository, IPatientRecordRepository patientRecordRepository)
         {
             _dbContext = dbContext;
             Patient = PatientRepository;
+            PatientRecord = patientRecordRepository;
         }
 
         public int Save()

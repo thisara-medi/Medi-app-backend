@@ -21,6 +21,7 @@ namespace UnitOfWorkDemo.Infrastructure.ServiceExtension
             });
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IPatientRepository, PatientRepository>();
+            services.AddScoped<IPatientRecordRepository, PatientRecordRepository>();
 
             return services;
         }
