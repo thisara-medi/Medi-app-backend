@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PMS.Core.Models;
+using UnitOfWorkDemo.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,36 +10,89 @@ namespace PMS.Endpoints.Controllers
     [ApiController]
     public class PatientRecordController : ControllerBase
     {
-        // GET: api/<PatientRecordController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        public readonly PatientRecordService _patientRecordService;
+
+        public PatientRecordController(PatientRecordService patientRecordService)
         {
-            return new string[] { "value1", "value2" };
+            this._patientRecordService = patientRecordService;
         }
 
-        // GET api/<PatientRecordController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("GetPatientRecordList")]
+        public async Task<IActionResult> GetPatientRecordList()
         {
-            return "value";
+            var productDetailsList = await _patientRecordService.GetAllpatientRecords();
+            if (productDetailsList == null)
+            {
+                return NotFound();
+            }
+            return Ok(productDetailsList);
         }
 
-        // POST api/<PatientRecordController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+
+        [HttpGet("GetPatientRecordById/{patientRecordId}")]
+        public async Task<IActionResult> GetPatientRecordById(int patientRecordId)
         {
+            var patientDetails = await _patientRecordService.GetPatientRecordById(patientRecordId);
+
+            if (patientDetails != null)
+            {
+                return Ok(patientDetails);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
-        // PUT api/<PatientRecordController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+
+        [HttpPost("AddPatientRecord")]
+        public async Task<IActionResult> AddPatientRecord(PatientRecord patientDetails)
         {
+            var isPatientCreated = await _patientRecordService.CreatePatientRecord(patientDetails);
+
+            if (isPatientCreated)
+            {
+                return Ok(isPatientCreated);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
-        // DELETE api/<PatientRecordController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+
+        [HttpPut("UpdatePatientRecord")]
+        public async Task<IActionResult> UpdatePatientRecord(PatientRecord patientDetails)
         {
+            if (patientDetails != null)
+            {
+                var isPatientUpdated = await _patientRecordService.UpdatePatientRecord(patientDetails);
+                if (isPatientUpdated)
+                {
+                    return Ok(isPatientUpdated);
+                }
+                return BadRequest();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+
+        [HttpDelete("DeletePatientRecord/{patientRecordId}")]
+        public async Task<IActionResult> DeletePatientRecord(int patientRecordId)
+        {
+            var isPatientRecordCreated = await _patientRecordService.DeletePatientRecord(patientRecordId);
+
+            if (isPatientRecordCreated)
+            {
+                return Ok(isPatientRecordCreated);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
     }
 }
