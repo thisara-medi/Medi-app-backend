@@ -20,6 +20,8 @@ namespace PMS.Core.Models
 
         public PatientCategories  PatientCategories { get; set; }
 
+        public int ReasonId { get; set; }
+
         [AllowNull]
         public int Age { get; set; }
 
