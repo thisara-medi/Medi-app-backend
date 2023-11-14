@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PMS.Core.Models;
 using UnitOfWorkDemo.Services;
+using UnitOfWorkDemo.Services.Interfaces;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -10,9 +11,9 @@ namespace PMS.Endpoints.Controllers
     [ApiController]
     public class PatientRecordController : ControllerBase
     {
-        public readonly PatientRecordService _patientRecordService;
+        public readonly IPatientRecordService _patientRecordService;
 
-        public PatientRecordController(PatientRecordService patientRecordService)
+        public PatientRecordController(IPatientRecordService patientRecordService)
         {
             this._patientRecordService = patientRecordService;
         }
