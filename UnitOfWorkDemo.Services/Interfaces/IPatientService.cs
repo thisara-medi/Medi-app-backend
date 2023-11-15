@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PMS.Core.Models.DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ namespace UnitOfWorkDemo.Services.Interfaces
 {
     public interface IPatientService
     {
-        Task<bool> CreatePatient(Patient patientDetails);
+        Task<bool> CreatePatient(PatientDto patientDetails);
 
         Task<IEnumerable<Patient>> GetAllpatients();
 
