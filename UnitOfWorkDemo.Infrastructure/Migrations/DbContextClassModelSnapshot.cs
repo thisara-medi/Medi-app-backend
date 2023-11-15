@@ -22,420 +22,419 @@ namespace PMS.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("PMS.Core.Models.PatientRecord", b =>
+            modelBuilder.Entity("PMS.Core.Models.PatientMedicalRecordDetails", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("PatientMedicalRecordID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("PatientMedicalRecordID"), 1L, 1);
 
-                    b.Property<int>("Age")
-                        .HasColumnType("int");
+                    b.Property<long>("BHTNumber")
+                        .HasColumnType("bigint");
 
-                    b.Property<decimal?>("BMI")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double?>("BMI")
+                        .HasColumnType("float");
 
-                    b.Property<string>("Bht")
-                        .IsRequired()
+                    b.Property<string>("BloodLossInTheDrainD1_D2")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("BloodLossInTheDrainD1_D2")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("BloodLossInTheDrainD2")
-                        .HasColumnType("int");
-
-                    b.Property<bool?>("BoneAvolsion")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("ChestComplications_1st")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ChestComplications_2st")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ChestComplications_Intermediate")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ChestComplications_Late")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
+                    b.Property<string>("BloodLossInTheDrainD2")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BoneAvolsion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ChestComplications_1st")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ChestComplications_2st")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ChestComplications_Intermediate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ChestComplications_Late")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("CreatedBy")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool?>("DLD")
-                        .HasColumnType("bit");
+                    b.Property<string>("DLD")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("DM")
-                        .HasColumnType("bit");
+                    b.Property<string>("DM")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("DateofSurgery")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("DeepWoundInfections_1st")
-                        .HasColumnType("int");
+                    b.Property<string>("DeepWoundInfections_1st")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("DeepWoundInfections_2nd")
-                        .HasColumnType("int");
+                    b.Property<string>("DeepWoundInfections_2nd")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("DeepWoundInfections_Intermediate")
-                        .HasColumnType("int");
+                    b.Property<string>("DeepWoundInfections_Intermediate")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("DeepWoundInfections_Late")
-                        .HasColumnType("int");
+                    b.Property<string>("DeepWoundInfections_Late")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeletedBy")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("EffectivenessInMobilization")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("FatEmbolism_1st")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("FatEmbolism_2st")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("FatEmbolism_Intermediate")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("FatEmbolism_Late")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Height")
-                        .HasColumnType("float");
-
-                    b.Property<int?>("Height_cm")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Hematoma_1st")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Hematoma_2st")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Hematoma_Intermediate")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Hematoma_Late")
-                        .HasColumnType("int");
-
-                    b.Property<bool?>("Hepato_Gastrointestinal")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("HxOfOtherMSKInjuriesAndPains")
-                        .IsRequired()
+                    b.Property<string>("EffectivenessInMobilization")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("Hypertension")
-                        .HasColumnType("bit");
+                    b.Property<string>("FatEmbolism_1st")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FatEmbolism_2st")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FatEmbolism_2st_Intermediate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FatEmbolism_Late")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double?>("Height_cm")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Hematoma_1st")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Hematoma_2st")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Hematoma_Intermediate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Hematoma_Late")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Hepato_Gastrointestinal")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HxOfOtherMSKInjuriesAndPains")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Hypertension")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("IatrogenicFactors")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("IndicationForAdmissionToTheICU")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("IschemicHeartDiseases")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("LigametAvulsions")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ModifiedBy")
-                        .IsRequired()
+                    b.Property<string>("IndicationForTheSurgery")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IsDeleted")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IschemicHeartDiseases")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LigametAvulsions")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("ModifiedBy")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("N0ofPostOpFFPTransfussions")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("NOofPostOpBloodTransfussions")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
+                    b.Property<string>("N0ofPostOpFFPTransfussions")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("NoofDaysInTheHospital")
-                        .HasColumnType("int");
+                    b.Property<string>("NOofPostOpBloodTransfussions")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("NoofDaysInTheICU")
-                        .HasColumnType("int");
+                    b.Property<string>("NoofDaysInTheHospital")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NoofDaysInTheICU")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Other")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Other1")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Other2")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("OtherBoneDissordersInLimbs_congenital")
-                        .HasColumnType("bit");
+                    b.Property<string>("OtherBoneDissordersInLimbs_congenital")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("OtherBoneDissordersInLimbs_traumatic")
-                        .HasColumnType("bit");
+                    b.Property<string>("OtherBoneDissordersInLimbs_traumatic")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Others")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PainTolerance_PostOpD1")
+                    b.Property<string>("PainTolerance_PostOpD1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PainTolerance_beforeDischarge")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PatientProfileID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PainTolerance_beforeDischarge")
+                    b.Property<int>("PatientTypeID")
                         .HasColumnType("int");
 
-                    b.Property<int>("PatientCategories")
-                        .HasColumnType("int");
+                    b.Property<string>("PerOperativeBloodLoss")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PatientId")
-                        .HasColumnType("int");
+                    b.Property<string>("PeripheralNeuropathies")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PerOperativeBloodLoss")
-                        .HasColumnType("int");
+                    b.Property<string>("PostOpD3BP")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("PeripheralNeuropathies")
-                        .HasColumnType("bit");
+                    b.Property<string>("PostOpD3BloodUrea")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PostOpD3BP")
-                        .HasColumnType("int");
+                    b.Property<string>("PostOpD3FBS")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PostOpD3BloodUrea")
-                        .HasColumnType("int");
+                    b.Property<string>("PostOpD3HB")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PostOpD3FBS")
-                        .HasColumnType("int");
+                    b.Property<string>("PostOpD3HR")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PostOpD3HB")
-                        .HasColumnType("int");
+                    b.Property<string>("PostOpD3NeutrophilCount_103_uL")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PostOpD3HR")
-                        .HasColumnType("int");
+                    b.Property<string>("PostOpD3RR")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PostOpD3NeutrophilCount_103_uL")
-                        .HasColumnType("int");
+                    b.Property<string>("PostOpD3SerumCreatinine")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PostOpD3RR")
-                        .HasColumnType("int");
+                    b.Property<string>("PostOpD3SerumK")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PostOpD3SerumCreatinine")
-                        .HasColumnType("int");
+                    b.Property<string>("PostOpD3SerumNa")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PostOpD3SerumK")
-                        .HasColumnType("int");
+                    b.Property<string>("PostOpD3WBC")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PostOpD3SerumNa")
-                        .HasColumnType("int");
+                    b.Property<string>("PostOpD5BP")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PostOpD3WBC")
-                        .HasColumnType("int");
+                    b.Property<string>("PostOpD5BloodUrea")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PostOpD5BP")
-                        .HasColumnType("int");
+                    b.Property<string>("PostOpD5FBS")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PostOpD5BloodUrea")
-                        .HasColumnType("int");
+                    b.Property<string>("PostOpD5HB")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PostOpD5FBS")
-                        .HasColumnType("int");
+                    b.Property<string>("PostOpD5HR")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PostOpD5HB")
-                        .HasColumnType("int");
+                    b.Property<string>("PostOpD5Neutrophil")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PostOpD5HR")
-                        .HasColumnType("int");
+                    b.Property<string>("PostOpD5RR")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PostOpD5Neutrophil")
-                        .HasColumnType("int");
+                    b.Property<string>("PostOpD5SerumCreatinine")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PostOpD5RR")
-                        .HasColumnType("int");
+                    b.Property<string>("PostOpD5SerumK")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PostOpD5SerumCreatinine")
-                        .HasColumnType("int");
+                    b.Property<string>("PostOpD5SerumNa")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PostOpD5SerumK")
-                        .HasColumnType("int");
+                    b.Property<string>("PostOpD5WBC")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PostOpD5SerumNa")
-                        .HasColumnType("int");
+                    b.Property<string>("PostOpDay1BP")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PostOpD5WBC")
-                        .HasColumnType("int");
+                    b.Property<string>("PostOpDay1BloodUrea")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PostOpDay1BP")
-                        .HasColumnType("int");
+                    b.Property<string>("PostOpDay1FBS_mg_dL")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PostOpDay1BloodUrea")
-                        .HasColumnType("int");
+                    b.Property<string>("PostOpDay1HB")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PostOpDay1FBS_mg_dL")
-                        .HasColumnType("int");
+                    b.Property<string>("PostOpDay1HR")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PostOpDay1HB")
-                        .HasColumnType("int");
+                    b.Property<string>("PostOpDay1Neutrophil")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PostOpDay1HR")
-                        .HasColumnType("int");
+                    b.Property<string>("PostOpDay1RR")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PostOpDay1Neutrophil")
-                        .HasColumnType("int");
+                    b.Property<string>("PostOpDay1SerumCreatinine")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PostOpDay1RR")
-                        .HasColumnType("int");
+                    b.Property<string>("PostOpDay1SerumK")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PostOpDay1SerumCreatinine")
-                        .HasColumnType("int");
+                    b.Property<string>("PostOpDay1SerumNa")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PostOpDay1SerumK")
-                        .HasColumnType("int");
+                    b.Property<string>("PostOpDay1WBC")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PostOpDay1SerumNa")
-                        .HasColumnType("int");
+                    b.Property<string>("PreOpBP_mmHg")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PostOpDay1WBC")
-                        .HasColumnType("int");
+                    b.Property<string>("PreOpBloodUrea_mg_dL")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PreOpBP_mmHg")
-                        .HasColumnType("int");
+                    b.Property<string>("PreOpFBS_mg_dL")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PreOpBloodUrea_mg_dL")
-                        .HasColumnType("int");
+                    b.Property<string>("PreOpHB_g_dL")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PreOpFBS_mg_dL")
-                        .HasColumnType("int");
+                    b.Property<string>("PreOpHR_bpm")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PreOpHB_g_dL")
-                        .HasColumnType("int");
+                    b.Property<string>("PreOpK")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PreOpHR_bpm")
-                        .HasColumnType("int");
+                    b.Property<string>("PreOpNa")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PreOpK")
-                        .HasColumnType("int");
+                    b.Property<string>("PreOpNeutrophilCount")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PreOpNa")
-                        .HasColumnType("int");
+                    b.Property<string>("PreOpRR_bpm")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PreOpNeutrophilCount")
-                        .HasColumnType("int");
+                    b.Property<string>("PreOpSCcreatinine")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PreOpRR_bpm")
-                        .HasColumnType("int");
+                    b.Property<string>("PreOpWBC_103")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PreOpSCcreatinine")
-                        .HasColumnType("int");
+                    b.Property<string>("QuadricepMuscleRupture_1st")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PreOpWBC_103")
-                        .HasColumnType("int");
+                    b.Property<string>("QuadricepMuscleRupture_2st")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("QuadricepMuscleRupture_1st")
-                        .HasColumnType("int");
+                    b.Property<string>("QuadricepMuscleRupture_Intermediate")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("QuadricepMuscleRupture_2st")
-                        .HasColumnType("int");
+                    b.Property<string>("QuadricepMuscleRupture_Late")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("QuadricepMuscleRupture_Intermediate")
-                        .HasColumnType("int");
+                    b.Property<long>("ReasonID")
+                        .HasColumnType("bigint");
 
-                    b.Property<int?>("QuadricepMuscleRupture_Late")
-                        .HasColumnType("int");
+                    b.Property<string>("Renal")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ReasonId")
-                        .HasColumnType("int");
+                    b.Property<string>("Respiratory")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("Renal")
-                        .HasColumnType("bit");
+                    b.Property<string>("SkinOpening_1st")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("Respiratory")
-                        .HasColumnType("bit");
+                    b.Property<string>("SkinOpening_2st")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SkinOpening_1st")
-                        .HasColumnType("int");
+                    b.Property<string>("SkinOpening_Intermediate")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SkinOpening_2st")
-                        .HasColumnType("int");
+                    b.Property<string>("SkinOpening_Late")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SkinOpening_Intermediate")
-                        .HasColumnType("int");
+                    b.Property<string>("Stroke")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SkinOpening_Late")
-                        .HasColumnType("int");
+                    b.Property<string>("SuperficialWoundInfections_1st")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("Stroke")
-                        .HasColumnType("bit");
+                    b.Property<string>("SuperficialWoundInfections_2nd")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SuperficialWoundInfections_1st")
-                        .HasColumnType("int");
+                    b.Property<string>("SuperficialWoundInfections_Intermediate")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SuperficialWoundInfections_2nd")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("SuperficialWoundInfections_Intermediate")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("SuperficialWoundInfections_Late")
-                        .HasColumnType("int");
+                    b.Property<string>("SuperficialWoundInfections_Late")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Surgery")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SurgicalWoundComplication_1st")
-                        .HasColumnType("int");
+                    b.Property<string>("SurgicalWoundComplication_1st")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SurgicalWoundComplication_2st")
-                        .HasColumnType("int");
+                    b.Property<string>("SurgicalWoundComplication_2st")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SurgicalWoundComplication_Intermediate")
-                        .HasColumnType("int");
+                    b.Property<string>("SurgicalWoundComplication_Intermediate")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SurgicalWoundComplication_Late")
-                        .HasColumnType("int");
+                    b.Property<string>("SurgicalWoundComplication_Late")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("Thyroid")
-                        .HasColumnType("bit");
+                    b.Property<string>("Thyroid")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TorniquetTimeMin")
-                        .HasColumnType("int");
+                    b.Property<string>("TorniquetTimeMin")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TotalOperativeRoomTime_min")
-                        .HasColumnType("int");
+                    b.Property<string>("TotalOperativeRoomTime_min")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("TranexamicAcidGivenOrNot")
-                        .HasColumnType("bit");
+                    b.Property<string>("TranexamicAcidGivenOrNot")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Weight")
+                    b.Property<double?>("Weight_kg")
                         .HasColumnType("float");
 
-                    b.Property<int?>("Weight_kg")
-                        .HasColumnType("int");
+                    b.HasKey("PatientMedicalRecordID");
 
-                    b.Property<string>("other")
+                    b.HasIndex("PatientProfileID");
+
+                    b.HasIndex("ReasonID");
+
+                    b.ToTable("PatientRecord");
+                });
+
+            modelBuilder.Entity("PMS.Core.Models.Reason", b =>
+                {
+                    b.Property<long>("ReasonID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ReasonID"), 1L, 1);
+
+                    b.Property<string>("ReasonDescription")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ReasonID");
 
-                    b.ToTable("PatientRecord");
+                    b.ToTable("Reason");
                 });
 
             modelBuilder.Entity("UnitOfWorkDemo.Core.Models.Patient", b =>
@@ -486,6 +485,30 @@ namespace PMS.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Patients");
+                });
+
+            modelBuilder.Entity("PMS.Core.Models.PatientMedicalRecordDetails", b =>
+                {
+                    b.HasOne("UnitOfWorkDemo.Core.Models.Patient", "PatientProfile")
+                        .WithMany("PatientMedicalRecordDetails")
+                        .HasForeignKey("PatientProfileID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PMS.Core.Models.Reason", "Reason")
+                        .WithMany()
+                        .HasForeignKey("ReasonID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PatientProfile");
+
+                    b.Navigation("Reason");
+                });
+
+            modelBuilder.Entity("UnitOfWorkDemo.Core.Models.Patient", b =>
+                {
+                    b.Navigation("PatientMedicalRecordDetails");
                 });
 #pragma warning restore 612, 618
         }
