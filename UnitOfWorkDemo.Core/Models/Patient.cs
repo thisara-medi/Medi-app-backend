@@ -1,10 +1,13 @@
 ﻿
+using PMS.Core.Models;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
 namespace UnitOfWorkDemo.Core.Models
 {
     public class Patient
     {
+        [Key]
         public int Id { get; set; }
 
         [AllowNull]
@@ -36,6 +39,8 @@ namespace UnitOfWorkDemo.Core.Models
 
         [AllowNull]
         public string Allergic { get; set; }
+
+        public ICollection<PatientMedicalRecordDetails> PatientMedicalRecordDetails { get; set; }
     }
 
 }

@@ -4,7 +4,7 @@ using UnitOfWorkDemo.Core.Models;
 
 namespace UnitOfWorkDemo.Infrastructure.Repositories
 {
-    public class PatientRecordRepository : GenericRepository<PatientRecord>, IPatientRecordRepository
+    public class PatientRecordRepository : GenericRepository<PatientMedicalRecordDetails>, IPatientRecordRepository
     {
         public PatientRecordRepository(DbContextClass dbContext) : base(dbContext)
         {

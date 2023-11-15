@@ -3,7 +3,7 @@ using UnitOfWorkDemo.Core.Models;
 
 namespace UnitOfWorkDemo.Core.Interfaces
 {
-    public interface IPatientRecordRepository : IGenericRepository<PatientRecord>
+    public interface IPatientRecordRepository : IGenericRepository<PatientMedicalRecordDetails>
     {
 
     }

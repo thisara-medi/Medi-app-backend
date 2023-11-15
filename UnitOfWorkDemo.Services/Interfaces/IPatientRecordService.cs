@@ -10,13 +10,13 @@ namespace UnitOfWorkDemo.Services.Interfaces
 {
     public interface IPatientRecordService
     {
-        Task<bool> CreatePatientRecord(PatientRecord patientRecordDetails);
+        Task<bool> CreatePatientRecord(PatientMedicalRecordDetails patientRecordDetails);
 
-        Task<IEnumerable<PatientRecord>> GetAllpatientRecords();
+        Task<IEnumerable<PatientMedicalRecordDetails>> GetAllpatientRecords();
 
-        Task<PatientRecord> GetPatientRecordById(int patientRecordId);
+        Task<PatientMedicalRecordDetails> GetPatientRecordById(int patientRecordId);
 
-        Task<bool> UpdatePatientRecord(PatientRecord ppatientRecordDetails);
+        Task<bool> UpdatePatientRecord(PatientMedicalRecordDetails ppatientRecordDetails);
 
         Task<bool> DeletePatientRecord(int patientRecordId);
     }

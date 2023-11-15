@@ -19,7 +19,7 @@ namespace UnitOfWorkDemo.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<bool> CreatePatientRecord(PatientRecord patientRecordDetails)
+        public async Task<bool> CreatePatientRecord(PatientMedicalRecordDetails patientRecordDetails)
         {
             if (patientRecordDetails != null)
             {
@@ -54,13 +54,13 @@ namespace UnitOfWorkDemo.Services
             return false;
         }
 
-        public async Task<IEnumerable<PatientRecord>> GetAllpatientRecords()
+        public async Task<IEnumerable<PatientMedicalRecordDetails>> GetAllpatientRecords()
         {
             var patientRecordList = await _unitOfWork.PatientRecord.GetAll();
             return patientRecordList;
         }
 
-        public async Task<PatientRecord> GetPatientRecordById(int patientRecordId)
+        public async Task<PatientMedicalRecordDetails> GetPatientRecordById(int patientRecordId)
         {
             if (patientRecordId > 0)
             {
@@ -73,11 +73,11 @@ namespace UnitOfWorkDemo.Services
             return null;
         }
 
-        public async Task<bool> UpdatePatientRecord(PatientRecord patientRecordDetails)
+        public async Task<bool> UpdatePatientRecord(PatientMedicalRecordDetails patientRecordDetails)
         {
             if (patientRecordDetails != null)
             {
-                var patientRecord = await _unitOfWork.PatientRecord.GetById(patientRecordDetails.Id);
+                var patientRecord = await _unitOfWork.PatientRecord.GetById(patientRecordDetails.PatientMedicalRecordID);
                 if(patientRecord != null)
                 {
                     patientRecord = patientRecordDetails;

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UnitOfWorkDemo.Infrastructure;
 
@@ -11,9 +12,10 @@ using UnitOfWorkDemo.Infrastructure;
 namespace PMS.Infrastructure.Migrations
 {
     [DbContext(typeof(DbContextClass))]
-    partial class DbContextClassModelSnapshot : ModelSnapshot
+    [Migration("20231115144026_PatientMedicalRecordDetails updated and reason added")]
+    partial class PatientMedicalRecordDetailsupdatedandreasonadded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -490,7 +492,7 @@ namespace PMS.Infrastructure.Migrations
             modelBuilder.Entity("PMS.Core.Models.PatientMedicalRecordDetails", b =>
                 {
                     b.HasOne("UnitOfWorkDemo.Core.Models.Patient", "PatientProfile")
-                        .WithMany("PatientMedicalRecordDetails")
+                        .WithMany()
                         .HasForeignKey("PatientProfileID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -504,11 +506,6 @@ namespace PMS.Infrastructure.Migrations
                     b.Navigation("PatientProfile");
 
                     b.Navigation("Reason");
-                });
-
-            modelBuilder.Entity("UnitOfWorkDemo.Core.Models.Patient", b =>
-                {
-                    b.Navigation("PatientMedicalRecordDetails");
                 });
 #pragma warning restore 612, 618
         }
