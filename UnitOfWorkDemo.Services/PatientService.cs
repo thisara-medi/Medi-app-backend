@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PMS.Core.Models.DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,11 +19,25 @@ namespace UnitOfWorkDemo.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<bool> CreatePatient(Patient patientDetails)
+        public async Task<bool> CreatePatient(PatientDto patientDetails)
         {
             if (patientDetails != null)
             {
-                await _unitOfWork.Patient.Add(patientDetails);
+
+                await _unitOfWork.Patient.Add(new Patient()
+                {
+                    Id = patientDetails.Id,
+                    Address = patientDetails.Address,
+                    LastName = patientDetails.LastName,
+                    Allergic = patientDetails.Allergic,
+                    BloodGroup = patientDetails.BloodGroup,
+                    ContactNumber = patientDetails.ContactNumber,
+                    DateOfBirth = patientDetails.DateOfBirth,
+                    EmergencyContactNo = patientDetails.EmergencyContactNo,
+                    FirstName = patientDetails.FirstName,
+                    Gender = patientDetails.Gender,
+                    MedicalHistory = patientDetails.MedicalHistory
+                });
 
                 var result = _unitOfWork.Save();
 
