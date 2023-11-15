@@ -5,7 +5,7 @@ using UnitOfWorkDemo.Core.Models;
 
 namespace UnitOfWorkDemo.Infrastructure.Repositories
 {
-    public class PatientRecordRepository : GenericRepository<PatientRecord>, IPatientRecordRepository
+    public class PatientRecordRepository : GenericRepository<PatientMedicalRecordDetails>, IPatientRecordRepository
     {
         public PatientRecordRepository(DbContextClass dbContext) : base(dbContext)
         {
@@ -13,9 +13,9 @@ namespace UnitOfWorkDemo.Infrastructure.Repositories
             
         }
 
-        public async Task<List<PatientRecord>> GetRecordByPatientId(int patientId)
+        public async Task<List<PatientMedicalRecordDetails>> GetRecordByPatientId(int patientId)
         {
-            return _dbContext.PatientRecord.Where(u => u.PatientId == patientId).ToList();
+            return _dbContext.PatientRecord.Where(u => u.PatientProfileID == patientId).ToList();
 
         }
 
