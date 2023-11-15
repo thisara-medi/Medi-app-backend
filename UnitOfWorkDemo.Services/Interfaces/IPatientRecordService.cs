@@ -19,5 +19,7 @@ namespace UnitOfWorkDemo.Services.Interfaces
         Task<bool> UpdatePatientRecord(PatientRecord ppatientRecordDetails);
 
         Task<bool> DeletePatientRecord(int patientRecordId);
+
+        Task<List<PatientRecord>> GetRecordByPatientId(int patientRecordId);
     }
 }

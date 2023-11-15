@@ -94,5 +94,18 @@ namespace UnitOfWorkDemo.Services
             }
             return false;
         }
+
+        public Task<List<PatientRecord>> GetRecordByPatientId(int patientRecordId)
+        {
+            if (patientRecordId > 0)
+            {
+                var patientRecordDetails = _unitOfWork.PatientRecord.GetRecordByPatientId(patientRecordId);
+                if (patientRecordDetails != null)
+                {
+                    return patientRecordDetails;
+                }
+            }
+            return null;
+        }
     }
 }
