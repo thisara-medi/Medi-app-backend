@@ -31,9 +31,9 @@ namespace PMS.Endpoints.Controllers
 
 
         [HttpGet("GetPatientRecordById/{patientRecordId}")]
-        public async Task<IActionResult> GetPatientRecordById(int patientRecordId)
+        public async Task<IActionResult> GetPatientRecordById(int patientId)
         {
-            var patientDetails = await _patientRecordService.GetPatientRecordById(patientRecordId);
+            var patientDetails = await _patientRecordService.GetPatientRecordById(patientId);
 
             if (patientDetails != null)
             {
@@ -89,6 +89,21 @@ namespace PMS.Endpoints.Controllers
             if (isPatientRecordCreated)
             {
                 return Ok(isPatientRecordCreated);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet("GetRecordByPatientId/{patientRecordId}")]
+        public async Task<IActionResult> GetRecordByPatientId(int patientRecordId)
+        {
+            var patientDetails = await _patientRecordService.GetRecordByPatientId(patientRecordId);
+
+            if (patientDetails != null)
+            {
+                return Ok(patientDetails);
             }
             else
             {
