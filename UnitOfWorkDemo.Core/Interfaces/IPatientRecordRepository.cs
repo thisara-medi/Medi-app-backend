@@ -4,8 +4,8 @@ using UnitOfWorkDemo.Core.Models;
 
 namespace UnitOfWorkDemo.Core.Interfaces
 {
-    public interface IPatientRecordRepository : IGenericRepository<PatientRecord>
+    public interface IPatientRecordRepository : IGenericRepository<PatientMedicalRecordDetails>
     {
-         Task<List<PatientRecord>>GetRecordByPatientId(int patientId);
+         Task<List<PatientMedicalRecordDetails>>GetRecordByPatientId(int patientId);
     }
 }
