@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PMS.Core.Models.DTO;
 using UnitOfWorkDemo.Core.Models;
 using UnitOfWorkDemo.Services.Interfaces;
 
@@ -55,7 +56,7 @@ namespace UnitOfWorkDemo.Controllers
         /// <param name="patientDetails"></param>
         /// <returns></returns>
         [HttpPost("AddPatient")]
-        public async Task<IActionResult> AddPatient(Patient patientDetails)
+        public async Task<IActionResult> AddPatient(PatientDto patientDetails)
         {
             var isPatientCreated = await _patientService.CreatePatient(patientDetails);
 

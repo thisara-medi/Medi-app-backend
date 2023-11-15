@@ -47,7 +47,7 @@ namespace PMS.Endpoints.Controllers
 
 
         [HttpPost("AddPatientRecord")]
-        public async Task<IActionResult> AddPatientRecord(PatientRecord patientDetails)
+        public async Task<IActionResult> AddPatientRecord(PatientMedicalRecordDetails patientDetails)
         {
             var isPatientCreated = await _patientRecordService.CreatePatientRecord(patientDetails);
 
@@ -63,7 +63,7 @@ namespace PMS.Endpoints.Controllers
 
 
         [HttpPut("UpdatePatientRecord")]
-        public async Task<IActionResult> UpdatePatientRecord(PatientRecord patientDetails)
+        public async Task<IActionResult> UpdatePatientRecord(PatientMedicalRecordDetails patientDetails)
         {
             if (patientDetails != null)
             {
