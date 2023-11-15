@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using PMS.Core.Models.DTO;
 using UnitOfWorkDemo.Core.Models;
 using UnitOfWorkDemo.Services.Interfaces;
 
@@ -9,9 +11,12 @@ namespace UnitOfWorkDemo.Controllers
     public class PatientController : ControllerBase
     {
         public readonly IPatientService _patientService;
-        public PatientController(IPatientService patientService)
+        private readonly IMapper mapper;
+
+        public PatientController(IPatientService patientService, IMapper mapper)
         {
             _patientService = patientService;
+            this.mapper = mapper;
         }
 
         /// <summary>
@@ -22,11 +27,15 @@ namespace UnitOfWorkDemo.Controllers
         public async Task<IActionResult> GetPatientList()
         {
             var productDetailsList = await _patientService.GetAllpatients();
-            if(productDetailsList == null)
+
+            if (productDetailsList == null)
             {
                 return NotFound();
             }
-            return Ok(productDetailsList);
+
+            var productDetailsListDTO = mapper.Map<List<PatientDTO>>(productDetailsList.ToList());
+
+            return Ok(productDetailsListDTO);
         }
 
         /// <summary>
@@ -41,7 +50,8 @@ namespace UnitOfWorkDemo.Controllers
 
             if (patientDetails != null)
             {
-                return Ok(patientDetails);
+                var patientDetailsDTO = mapper.Map<PatientDTO>(patientDetails);
+                return Ok(patientDetailsDTO);
             }
             else
             {
@@ -55,13 +65,15 @@ namespace UnitOfWorkDemo.Controllers
         /// <param name="patientDetails"></param>
         /// <returns></returns>
         [HttpPost("AddPatient")]
-        public async Task<IActionResult> AddPatient(Patient patientDetails)
+        public async Task<IActionResult> AddPatient(PatientDTO patientDetailsDto)
         {
+            var patientDetails = mapper.Map<Patient>(patientDetailsDto);
+
             var isPatientCreated = await _patientService.CreatePatient(patientDetails);
 
             if (isPatientCreated)
             {
-                return Ok(isPatientCreated);
+                return Ok(mapper.Map<PatientDTO>(patientDetails));
             }
             else
             {
@@ -75,14 +87,15 @@ namespace UnitOfWorkDemo.Controllers
         /// <param name="patientDetails"></param>
         /// <returns></returns>
         [HttpPut("UpdatePatient")]
-        public async Task<IActionResult> UpdatePatient(Patient patientDetails)
+        public async Task<IActionResult> UpdatePatient(PatientDTO patientDetailsDto)
         {
-            if (patientDetails != null)
+            if (patientDetailsDto != null)
             {
+                var patientDetails = mapper.Map<Patient>(patientDetailsDto);
                 var isPatientUpdated = await _patientService.UpdatePatient(patientDetails);
                 if (isPatientUpdated)
                 {
-                    return Ok(isPatientUpdated);
+                    return Ok(mapper.Map<PatientDTO>(patientDetails));
                 }
                 return BadRequest();
             }

@@ -1,3 +1,4 @@
+using PMS.Endpoints.Mappings;
 using UnitOfWorkDemo.Infrastructure.ServiceExtension;
 using UnitOfWorkDemo.Services;
 using UnitOfWorkDemo.Services.Interfaces;
@@ -8,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDIServices(builder.Configuration);
 builder.Services.AddScoped<IPatientService, PatientService>();
 builder.Services.AddScoped<IPatientRecordService, PatientRecordService>();
+builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
 
 builder.Services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
