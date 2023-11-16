@@ -15,8 +15,9 @@ namespace UnitOfWorkDemo.Infrastructure.Repositories
 
         public async Task<List<PatientMedicalRecordDetails>> GetRecordByPatientId(int patientId)
             => await _dbContext.PatientRecord.Where(u => u.PatientProfileID == patientId).ToListAsync();
-        public IQueryable<PatientMedicalRecordDetails> GetPatientRecordsByNIC(string patientNIC)
-            => _dbContext.PatientRecord.Where(x => x.PatientProfile.NIC.Contains(patientNIC));
+        public IQueryable<PatientMedicalRecordDetails> GetPatientRecordsAsQuarable()
+            => _dbContext.PatientRecord
+            .Include(x=> x.PatientProfile);
 
         public IQueryable<PatientMedicalRecordDetails> GetPatientRecordsById(string patientId) 
             => _dbContext.PatientRecord.Where(x => x.PatientProfileID.ToString().Contains(patientId));

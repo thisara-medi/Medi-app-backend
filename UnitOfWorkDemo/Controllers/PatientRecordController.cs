@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using PMS.Core.Models;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using UnitOfWorkDemo.Services;
 using UnitOfWorkDemo.Services.Interfaces;
 
@@ -36,21 +38,23 @@ namespace PMS.Endpoints.Controllers
         {
             string[] searchstrings = searchstring.Split(',','/','|');
 
-            IEnumerable<PatientMedicalRecordDetails> patientRecords = new List<PatientMedicalRecordDetails>();
-            var name = searchstrings[0];
-            if (searchstrings.Count()>= 1 && !string.IsNullOrWhiteSpace(name))
+            var patientRecords = _patientRecordService.GetPatientRecordsAsQuarable();
+             
+            if (searchstrings.Count()>= 1 && !string.IsNullOrWhiteSpace(searchstrings[0]))
             {
-                patientRecords = _patientRecordService.GetPatientRecordsByPatientName(name);
+                var name = searchstrings[0];
+                patientRecords = patientRecords.Where(x => (x.PatientProfile.FirstName + x.PatientProfile.LastName).Contains(name));
             }
-            var id = searchstrings[1];
-            if (searchstrings.Count() >= 2 && !string.IsNullOrWhiteSpace(id))
+             
+            if (searchstrings.Count() >= 2 && !string.IsNullOrWhiteSpace(searchstrings[1]))
             {
-                patientRecords = patientRecords.Where(x => x.PatientProfileID.ToString().Contains(id));
+                var userId = searchstrings[1];
+                patientRecords = patientRecords.Where(x => x.PatientProfileID.ToString().Contains(userId));
             }
-            var nic = searchstrings[2];
-            if (searchstrings.Count() >= 3 && !string.IsNullOrWhiteSpace(nic))
+             
+            if (searchstrings.Count() >= 3 && !string.IsNullOrWhiteSpace(searchstrings[2]))
             {
-                patientRecords = patientRecords.Where(x => x.PatientProfile.NIC.Contains(nic));
+                patientRecords = patientRecords.Where(x => x.PatientProfile.NIC.Contains(searchstrings[2], StringComparison.OrdinalIgnoreCase));
             }
 
             var results = patientRecords.ToList();
@@ -58,7 +62,16 @@ namespace PMS.Endpoints.Controllers
             {
                 return NotFound();
             }
-            return Ok(patientRecords);
+            // Use JsonSerializerOptions with ReferenceHandler.Preserve
+            var jsonOptions = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve,
+                MaxDepth = 32, // Set the maximum depth if needed
+            };
+
+            // Serialize the results to JSON
+            var json = JsonSerializer.Serialize(results, jsonOptions);
+            return Ok(json);
         }
 
         [HttpGet("GetPatientRecordById/{patientRecordId}")]

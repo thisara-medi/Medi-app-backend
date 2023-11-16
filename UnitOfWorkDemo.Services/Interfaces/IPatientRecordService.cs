@@ -19,10 +19,8 @@ namespace UnitOfWorkDemo.Services.Interfaces
         Task<bool> UpdatePatientRecord(PatientMedicalRecordDetails ppatientRecordDetails);
 
         Task<bool> DeletePatientRecord(int patientRecordId);
-
         Task<List<PatientMedicalRecordDetails>> GetRecordByPatientId(int patientRecordId);
-        IQueryable<PatientMedicalRecordDetails> GetPatientRecordsByPatientName(string patientName);
-        IQueryable<PatientMedicalRecordDetails> GetPatientRecordsByNIC(string patientNIC);
-        IQueryable<PatientMedicalRecordDetails> GetPatientRecordsById(string patientId);
+
+        IQueryable<PatientMedicalRecordDetails> GetPatientRecordsAsQuarable();
     }
 }

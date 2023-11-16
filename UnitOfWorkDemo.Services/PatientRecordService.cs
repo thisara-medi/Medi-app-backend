@@ -111,8 +111,8 @@ namespace UnitOfWorkDemo.Services
         public IQueryable<PatientMedicalRecordDetails> GetPatientRecordsByPatientName(string patientName)
             => _unitOfWork.PatientRecord.GetPatientRecordsByPatientName(patientName);
 
-        public IQueryable<PatientMedicalRecordDetails> GetPatientRecordsByNIC(string patientNIC)
-            => _unitOfWork.PatientRecord.GetPatientRecordsByNIC(patientNIC);
+        public IQueryable<PatientMedicalRecordDetails> GetPatientRecordsAsQuarable()
+            => _unitOfWork.PatientRecord.GetPatientRecordsAsQuarable();
 
         public IQueryable<PatientMedicalRecordDetails> GetPatientRecordsById(string patientId)
             => _unitOfWork.PatientRecord.GetPatientRecordsById(patientId);
