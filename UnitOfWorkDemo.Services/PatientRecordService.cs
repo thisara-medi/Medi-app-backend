@@ -108,7 +108,13 @@ namespace UnitOfWorkDemo.Services
             return null;
         }
 
-        public async Task<List<PatientMedicalRecordDetails>> GetPatientRecordsByPatientName(string patientName)
-            => await _unitOfWork.PatientRecord.GetPatientRecordsByPatientName(patientName);
+        public IQueryable<PatientMedicalRecordDetails> GetPatientRecordsByPatientName(string patientName)
+            => _unitOfWork.PatientRecord.GetPatientRecordsByPatientName(patientName);
+
+        public IQueryable<PatientMedicalRecordDetails> GetPatientRecordsByNIC(string patientNIC)
+            => _unitOfWork.PatientRecord.GetPatientRecordsByNIC(patientNIC);
+
+        public IQueryable<PatientMedicalRecordDetails> GetPatientRecordsById(string patientId)
+            => _unitOfWork.PatientRecord.GetPatientRecordsById(patientId);
     }
 }

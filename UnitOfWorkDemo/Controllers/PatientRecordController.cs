@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PMS.Core.Models;
+using System.Linq;
 using UnitOfWorkDemo.Services;
 using UnitOfWorkDemo.Services.Interfaces;
 
@@ -29,11 +31,30 @@ namespace PMS.Endpoints.Controllers
             return Ok(productDetailsList);
         }
 
-        [HttpGet("GetPatientRecordsByPatientName/{patientName}")]
-        public async Task<IActionResult> GetPatientRecordsByPatientName(string patientName)
+        [HttpGet("GetPatientRecordsBySearchString/{searchstring}")]
+        public async Task<IActionResult> GetPatientRecordsBySearchString(string searchstring)
         {
-            var patientRecords = await _patientRecordService.GetPatientRecordsByPatientName(patientName);
-            if (patientRecords == null)
+            string[] searchstrings = searchstring.Split(',','/','|');
+
+            IEnumerable<PatientMedicalRecordDetails> patientRecords = new List<PatientMedicalRecordDetails>();
+            var name = searchstrings[0];
+            if (searchstrings.Count()>= 1 && !string.IsNullOrWhiteSpace(name))
+            {
+                patientRecords = _patientRecordService.GetPatientRecordsByPatientName(name);
+            }
+            var id = searchstrings[1];
+            if (searchstrings.Count() >= 2 && !string.IsNullOrWhiteSpace(id))
+            {
+                patientRecords = patientRecords.Where(x => x.PatientProfileID.ToString().Contains(id));
+            }
+            var nic = searchstrings[2];
+            if (searchstrings.Count() >= 3 && !string.IsNullOrWhiteSpace(nic))
+            {
+                patientRecords = patientRecords.Where(x => x.PatientProfile.NIC.Contains(nic));
+            }
+
+            var results = patientRecords.ToList();
+            if (results == null)
             {
                 return NotFound();
             }

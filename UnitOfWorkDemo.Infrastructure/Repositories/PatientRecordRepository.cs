@@ -10,11 +10,15 @@ namespace UnitOfWorkDemo.Infrastructure.Repositories
     {
         public PatientRecordRepository(DbContextClass dbContext) : base(dbContext) { }
 
-        public async Task<List<PatientMedicalRecordDetails>> GetPatientRecordsByPatientName(string patientName)
-            => await _dbContext.PatientRecord.Where(x => (x.PatientProfile.FirstName + x.PatientProfile.LastName).Contains(patientName)).ToListAsync();
+        public IQueryable<PatientMedicalRecordDetails> GetPatientRecordsByPatientName(string patientName)
+            => _dbContext.PatientRecord.Where(x => (x.PatientProfile.FirstName + x.PatientProfile.LastName).Contains(patientName));
 
         public async Task<List<PatientMedicalRecordDetails>> GetRecordByPatientId(int patientId)
             => await _dbContext.PatientRecord.Where(u => u.PatientProfileID == patientId).ToListAsync();
+        public IQueryable<PatientMedicalRecordDetails> GetPatientRecordsByNIC(string patientNIC)
+            => _dbContext.PatientRecord.Where(x => x.PatientProfile.NIC.Contains(patientNIC));
 
+        public IQueryable<PatientMedicalRecordDetails> GetPatientRecordsById(string patientId) 
+            => _dbContext.PatientRecord.Where(x => x.PatientProfileID.ToString().Contains(patientId));
     }
 }

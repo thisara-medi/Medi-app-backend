@@ -21,6 +21,8 @@ namespace UnitOfWorkDemo.Services.Interfaces
         Task<bool> DeletePatientRecord(int patientRecordId);
 
         Task<List<PatientMedicalRecordDetails>> GetRecordByPatientId(int patientRecordId);
-        Task<List<PatientMedicalRecordDetails>> GetPatientRecordsByPatientName(string patientName);
+        IQueryable<PatientMedicalRecordDetails> GetPatientRecordsByPatientName(string patientName);
+        IQueryable<PatientMedicalRecordDetails> GetPatientRecordsByNIC(string patientNIC);
+        IQueryable<PatientMedicalRecordDetails> GetPatientRecordsById(string patientId);
     }
 }
