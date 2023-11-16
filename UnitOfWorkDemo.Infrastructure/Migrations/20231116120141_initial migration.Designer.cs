@@ -12,8 +12,8 @@ using UnitOfWorkDemo.Infrastructure;
 namespace PMS.Infrastructure.Migrations
 {
     [DbContext(typeof(DbContextClass))]
-    [Migration("20231115145707_patient to PatientMedicalRecordDetails navigator added")]
-    partial class patienttoPatientMedicalRecordDetailsnavigatoradded
+    [Migration("20231116120141_initial migration")]
+    partial class initialmigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

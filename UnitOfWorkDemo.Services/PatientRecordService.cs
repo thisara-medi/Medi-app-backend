@@ -107,5 +107,8 @@ namespace UnitOfWorkDemo.Services
             }
             return null;
         }
+
+        public async Task<List<PatientMedicalRecordDetails>> GetPatientRecordsByPatientName(string patientName)
+            => await _unitOfWork.PatientRecord.GetPatientRecordsByPatientName(patientName);
     }
 }

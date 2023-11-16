@@ -29,6 +29,16 @@ namespace PMS.Endpoints.Controllers
             return Ok(productDetailsList);
         }
 
+        [HttpGet("GetPatientRecordsByPatientName/{patientName}")]
+        public async Task<IActionResult> GetPatientRecordsByPatientName(string patientName)
+        {
+            var patientRecords = await _patientRecordService.GetPatientRecordsByPatientName(patientName);
+            if (patientRecords == null)
+            {
+                return NotFound();
+            }
+            return Ok(patientRecords);
+        }
 
         [HttpGet("GetPatientRecordById/{patientRecordId}")]
         public async Task<IActionResult> GetPatientRecordById(int patientId)

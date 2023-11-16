@@ -23,23 +23,30 @@ namespace UnitOfWorkDemo.Services
         {
             if (patientDetails != null)
             {
-
-                await _unitOfWork.Patient.Add(new Patient()
+                int result = -1;
+                try
                 {
-                    Id = patientDetails.Id,
-                    Address = patientDetails.Address,
-                    LastName = patientDetails.LastName,
-                    Allergic = patientDetails.Allergic,
-                    BloodGroup = patientDetails.BloodGroup,
-                    ContactNumber = patientDetails.ContactNumber,
-                    DateOfBirth = patientDetails.DateOfBirth,
-                    EmergencyContactNo = patientDetails.EmergencyContactNo,
-                    FirstName = patientDetails.FirstName,
-                    Gender = patientDetails.Gender,
-                    MedicalHistory = patientDetails.MedicalHistory
-                });
+                    
+                    await _unitOfWork.Patient.Add(new Patient()
+                    {
+                        Address = patientDetails.Address,
+                        LastName = patientDetails.LastName,
+                        Allergic = patientDetails.Allergic,
+                        BloodGroup = patientDetails.BloodGroup,
+                        ContactNumber = patientDetails.ContactNumber,
+                        DateOfBirth = patientDetails.DateOfBirth,
+                        EmergencyContactNo = patientDetails.EmergencyContactNo,
+                        FirstName = patientDetails.FirstName,
+                        Gender = patientDetails.Gender,
+                        MedicalHistory = patientDetails.MedicalHistory
+                    });
 
-                var result = _unitOfWork.Save();
+                     result = _unitOfWork.Save();
+                }
+                catch (Exception ex)
+                {
+
+                }
 
                 if (result > 0)
                     return true;
