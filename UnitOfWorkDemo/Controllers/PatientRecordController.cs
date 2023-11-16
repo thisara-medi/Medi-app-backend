@@ -109,7 +109,7 @@ namespace PMS.Endpoints.Controllers
 
             if (patientDetails != null)
             {
-                return Ok(mapper.Map<PatientRecordDTO>(patientDetails));
+                return Ok(patientDetails);
             }
             else
             {

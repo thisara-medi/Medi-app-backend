@@ -16,32 +16,32 @@ namespace PMS.Core.Models
        public int PatientId { get; set; }
 
         [AllowNull]
-        public string Bht { get; set; }
+        public string? bht { get; set; }
 
-        public PatientCategories  PatientCategories { get; set; }
+        public PatientCategories?  PatientCategories { get; set; }
 
-        public int ReasonId { get; set; }
-
-        [AllowNull]
-        public int Age { get; set; }
+        public int? ReasonId { get; set; }
 
         [AllowNull]
-        public string Name { get; set; }
+        public int? Age { get; set; }
 
         [AllowNull]
-        public double Weight  { get; set; }
+        public string? Name { get; set; }
 
         [AllowNull]
-        public double Height { get; set; }
+        public double? Weight  { get; set; }
 
         [AllowNull]
-        public string Surgery { get; set; }
+        public double? Height { get; set; }
 
         [AllowNull]
-        public string IndicationForAdmissionToTheICU { get; set; }
+        public string? Surgery { get; set; }
 
         [AllowNull]
-        public bool TranexamicAcidGivenOrNot { get; set; }
+        public string? IndicationForAdmissionToTheICU { get; set; }
+
+        [AllowNull]
+        public bool? TranexamicAcidGivenOrNot { get; set; }
 
         [AllowNull]
         public int? PreOpBP_mmHg { get; set; }
@@ -200,16 +200,16 @@ namespace PMS.Core.Models
         public bool? Thyroid { get; set; }
 
         [AllowNull]
-        public string Others { get; set; }
+        public string? Others { get; set; }
 
         [AllowNull]
         public bool? IschemicHeartDiseases { get; set; }
 
         [AllowNull]
-        public string Other1 { get; set; }
+        public string? Other1 { get; set; }
 
         [AllowNull]
-        public string Other2 { get; set; }
+        public string? Other2 { get; set; }
 
         [AllowNull]
         public bool? PeripheralNeuropathies { get; set; }
@@ -224,7 +224,7 @@ namespace PMS.Core.Models
         public bool? OtherBoneDissordersInLimbs_traumatic { get; set; }
 
         [AllowNull]
-        public string HxOfOtherMSKInjuriesAndPains { get; set; }
+        public string? HxOfOtherMSKInjuriesAndPains { get; set; }
 
         [AllowNull]
         public bool? Hepato_Gastrointestinal { get; set; }
@@ -236,7 +236,7 @@ namespace PMS.Core.Models
         public bool? Renal { get; set; }
 
         [AllowNull]
-        public string other { get; set; }
+        public string? other { get; set; }
 
         [AllowNull]
         public int? PerOperativeBloodLoss { get; set; }
@@ -266,7 +266,7 @@ namespace PMS.Core.Models
         public bool? LigametAvulsions { get; set; }
 
         [AllowNull]
-        public string IatrogenicFactors { get; set; }
+        public string? IatrogenicFactors { get; set; }
 
         [AllowNull]
         public int? SuperficialWoundInfections_1st { get; set; }
@@ -383,13 +383,13 @@ namespace PMS.Core.Models
         public DateTime? CreatedDate { get; set; }
 
         [AllowNull]
-        public string CreatedBy { get; set; }
+        public string? CreatedBy { get; set; }
 
         [AllowNull]
         public DateTime? ModifiedDate { get; set; }
 
         [AllowNull]
-        public string ModifiedBy { get; set; }
+        public string? ModifiedBy { get; set; }
 
         [AllowNull]
         public bool? IsDeleted { get; set; }
@@ -398,7 +398,7 @@ namespace PMS.Core.Models
         public DateTime? DeletedDate { get; set; }
 
         [AllowNull]
-        public string DeletedBy { get; set; }
+        public string?  DeletedBy { get; set; }
 
     }
 }
