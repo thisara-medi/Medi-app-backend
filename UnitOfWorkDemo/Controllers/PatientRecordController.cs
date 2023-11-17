@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using PMS.Core.Models;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Web.Helpers;
 using UnitOfWorkDemo.Services;
 using UnitOfWorkDemo.Services.Interfaces;
 
@@ -63,15 +65,15 @@ namespace PMS.Endpoints.Controllers
                 return NotFound();
             }
             // Use JsonSerializerOptions with ReferenceHandler.Preserve
-            var jsonOptions = new JsonSerializerOptions
+            var jsonOptions = new JsonSerializerSettings
             {
-                ReferenceHandler = ReferenceHandler.Preserve,
-                MaxDepth = 32, // Set the maximum depth if needed
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
             };
 
             // Serialize the results to JSON
-            var json = JsonSerializer.Serialize(results, jsonOptions);
-            return Ok(json);
+            var json = JsonConvert.SerializeObject(results, jsonOptions);
+
+            return Ok(JsonConvert.DeserializeObject<List<PatientMedicalRecordDetails>>(json));
         }
 
         [HttpGet("GetPatientRecordById/{patientRecordId}")]
