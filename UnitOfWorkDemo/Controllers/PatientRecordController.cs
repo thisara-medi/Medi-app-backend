@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using PMS.Core.Models;
@@ -74,6 +75,55 @@ namespace PMS.Endpoints.Controllers
             var json = JsonConvert.SerializeObject(results, jsonOptions);
 
             return Ok(JsonConvert.DeserializeObject<List<PatientMedicalRecordDetails>>(json));
+        }
+
+
+        [HttpGet("GetPatientRecordsByReason/{reason}")]
+        public async Task<IActionResult> GetPatientRecordsByReason(string reason)
+        {
+            var results = await _patientRecordService.GetPatientRecordsAsQuarable().Where(x=> x.Reason.ReasonDescription.Contains(reason)).ToListAsync();
+
+            if (results != null)
+            {
+                // Use JsonSerializerOptions with ReferenceHandler.Preserve
+                var jsonOptions = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                };
+
+                // Serialize the results to JSON
+                var json = JsonConvert.SerializeObject(results, jsonOptions);
+
+                return Ok(JsonConvert.DeserializeObject<List<PatientMedicalRecordDetails>>(json));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet("GetPatientRecordsByDate/")]
+        public async Task<IActionResult> GetPatientRecordsByDate(DateTime fromdate, DateTime? todate)
+        {
+            var results = await _patientRecordService.GetPatientRecordsAsQuarable().Where(x => x.CreatedDate>= fromdate && x.CreatedDate<=todate).ToListAsync();
+
+            if (results != null)
+            {
+                // Use JsonSerializerOptions with ReferenceHandler.Preserve
+                var jsonOptions = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                };
+
+                // Serialize the results to JSON
+                var json = JsonConvert.SerializeObject(results, jsonOptions);
+
+                return Ok(JsonConvert.DeserializeObject<List<PatientMedicalRecordDetails>>(json));
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         [HttpGet("GetPatientRecordById/{patientRecordId}")]
