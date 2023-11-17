@@ -28,12 +28,21 @@ namespace PMS.Endpoints.Controllers
         [HttpGet("GetPatientRecordList")]
         public async Task<IActionResult> GetPatientRecordList()
         {
-            var productDetailsList = await _patientRecordService.GetAllpatientRecords();
-            if (productDetailsList == null)
+            var results = await _patientRecordService.GetAllpatientRecords();
+            if (results == null)
             {
                 return NotFound();
             }
-            return Ok(productDetailsList);
+            // Use JsonSerializerOptions with ReferenceHandler.Preserve
+            var jsonOptions = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            };
+
+            // Serialize the results to JSON
+            var json = JsonConvert.SerializeObject(results, jsonOptions);
+
+            return Ok(JsonConvert.DeserializeObject<List<PatientMedicalRecordDetails>>(json));
         }
 
         [HttpGet("GetPatientRecordsBySearchString/{searchstring}")]
