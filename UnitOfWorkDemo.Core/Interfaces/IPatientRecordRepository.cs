@@ -6,6 +6,6 @@ namespace UnitOfWorkDemo.Core.Interfaces
 {
     public interface IPatientRecordRepository : IGenericRepository<PatientRecord>
     {
-         Task<List<PatientRecord>>GetRecordByPatientId(int patientId);
+         Task<List<PatientRecord>> GetRecordByPatientId(int patientId);
     }
 }

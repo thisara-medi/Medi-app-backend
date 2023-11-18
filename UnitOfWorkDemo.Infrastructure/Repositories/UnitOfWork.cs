@@ -1,4 +1,8 @@
-﻿using System;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using PMS.Core.Interfaces;
+using PMS.Infrastructure.Repositories.UserRepository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,20 +16,31 @@ namespace UnitOfWorkDemo.Infrastructure.Repositories
         private readonly DbContextClass _dbContext;
         public IPatientRepository Patient { get; }
         public IPatientRecordRepository PatientRecord { get; }
+        private IUserRepository _userRepository { get; }
+        private readonly IMapper _mapper;
 
-        public UnitOfWork(DbContextClass dbContext,
-                            IPatientRepository PatientRepository, IPatientRecordRepository patientRecordRepository)
+        public UnitOfWork(DbContextClass dbContext, IMapper mapper,
+                            IPatientRepository PatientRepository, IPatientRecordRepository patientRecordRepository,IUserRepository userRepository)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
             Patient = PatientRepository;
             PatientRecord = patientRecordRepository;
+            _userRepository = userRepository;
         }
+        public IUserRepository UserRepository { get; private set; }
+
 
         public int Save()
         {
             return _dbContext.SaveChanges();
         }
+        public async Task<int> CompleteAsync()
+        {
+            return await _dbContext.SaveChangesAsync();
+        }
 
+      
         public void Dispose()
         {
             Dispose(true);
