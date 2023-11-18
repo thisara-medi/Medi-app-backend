@@ -21,9 +21,7 @@ namespace PMS.Infrastructure.Repositories.UserRepository
 
         public async Task<User> FindUserByUsernameAndPasswordAsync(string username, string password)
         {
-            // For simplicity, this example assumes plain text password storage.
-            // In a real-world scenario, use proper password hashing and comparison.
-
+         
             return await _context.Users.SingleOrDefaultAsync(u => u.Username == username && u.Password == password);
         }
     

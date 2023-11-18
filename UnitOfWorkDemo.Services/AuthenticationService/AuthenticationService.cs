@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using AutoMapper;
+using Microsoft.IdentityModel.Tokens;
 using PMS.Core.Models;
 using PMS.Core.Models.DTO;
 using PMS.Endpoints;
@@ -17,44 +18,43 @@ namespace PMS.Services.AuthenticationService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly TokenService _tokenService;
-       
-       
+        private readonly IMapper _mapper;
 
-        public AuthenticationService(IUnitOfWork unitOfWork, TokenService tokenService)
+        public AuthenticationService(IUnitOfWork unitOfWork, TokenService tokenService, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _tokenService = tokenService;
+            _mapper = mapper;
         }
-
-
-
-        public async Task<User> LoginUser(User user)
+        public async Task<LoginDto> LoginUser(string username, string password)
         {
-            // Validate the incoming model
-            if (user == null || string.IsNullOrEmpty(user.Username) || string.IsNullOrEmpty(user.Password))
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
-                throw new ArgumentException("Invalid model");
+                throw new ArgumentException("Invalid username or password");
             }
+            var user = await _unitOfWork.UserRepository.FindUserByUsernameAndPasswordAsync(username, password);
 
-            var userModel = await _unitOfWork.UserRepository.FindUserByUsernameAndPasswordAsync(user.Username, user.Password);
 
-           
             if (user == null)
             {
                 throw new UnauthorizedAccessException("Invalid username or password");
             }
+            var token = _tokenService.GenerateToken(TokenGenerate.SecretKey, _tokenService.DefaultIssuer, _tokenService.DefaultAudience, username);
 
-            var token = _tokenService.GenerateToken(TokenGenerate.SecretKey, user.Username);
-
-         
             await _unitOfWork.CompleteAsync();
 
-            return (User)token;
-        }
+            var loginDto = _mapper.Map<LoginDto>(user);
 
-       
+            loginDto.Token = token;
+
+            return loginDto;
+        }
     }
 }
+
+      
+    
+
 
 
 

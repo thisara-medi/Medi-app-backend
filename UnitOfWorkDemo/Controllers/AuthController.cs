@@ -11,32 +11,24 @@ namespace PMS.Endpoints.Controllers
     public class AuthController : ControllerBase
     {
         private readonly AuthenticationService _authenticationService;
-        private readonly IUnitOfWork _unitOfWork;
-
-
-        public AuthController(AuthenticationService authenticationService, IUnitOfWork unitOfWork)
+    
+        public AuthController(AuthenticationService authenticationService)
         {
             _authenticationService = authenticationService;
-            _unitOfWork = unitOfWork;
 
         }
-
-
           [HttpPost("login")]
-            public async Task<IActionResult> Login([FromBody] User model)
+            public async Task<IActionResult> Login([FromBody] User user)
             {
             try
             {
-                var token = await _authenticationService.LoginUser(model);
+                var token = await _authenticationService.LoginUser(user.Username, user.Password);
                 return Ok(new { Token = token });
             }
-            catch (ArgumentException ex)
+            catch (Exception ex)
             {
-                return BadRequest(ex.Message);
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                return Unauthorized(ex.Message);
+               
+                return BadRequest(new { Message = ex.Message });
             }
         }
 
