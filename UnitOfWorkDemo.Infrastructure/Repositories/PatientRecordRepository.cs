@@ -1,4 +1,5 @@
-﻿using PMS.Core.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using PMS.Core.Models;
 using System.Collections.Generic;
 using UnitOfWorkDemo.Core.Interfaces;
 using UnitOfWorkDemo.Core.Models;
@@ -15,7 +16,8 @@ namespace UnitOfWorkDemo.Infrastructure.Repositories
 
         public async Task<List<PatientRecord>> GetRecordByPatientId(int patientId)
         {
-            return _dbContext.PatientRecord.Where(u => u.PatientId == patientId).ToList();
+           
+            return   _dbContext.PatientRecord.AsNoTracking().Where(u => u.PatientId == patientId).ToList();
 
         }
 

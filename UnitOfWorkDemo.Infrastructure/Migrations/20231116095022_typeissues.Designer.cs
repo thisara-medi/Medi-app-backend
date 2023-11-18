@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UnitOfWorkDemo.Infrastructure;
 
@@ -11,9 +12,10 @@ using UnitOfWorkDemo.Infrastructure;
 namespace PMS.Infrastructure.Migrations
 {
     [DbContext(typeof(DbContextClass))]
-    partial class DbContextClassModelSnapshot : ModelSnapshot
+    [Migration("20231116095022_typeissues")]
+    partial class typeissues
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,7 +32,7 @@ namespace PMS.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("Age")
+                    b.Property<int>("Age")
                         .HasColumnType("int");
 
                     b.Property<decimal?>("BMI")
@@ -58,6 +60,7 @@ namespace PMS.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("CreatedDate")
@@ -85,6 +88,7 @@ namespace PMS.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("DeletedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("DeletedDate")
@@ -105,7 +109,7 @@ namespace PMS.Infrastructure.Migrations
                     b.Property<int?>("FatEmbolism_Late")
                         .HasColumnType("int");
 
-                    b.Property<double?>("Height")
+                    b.Property<double>("Height")
                         .HasColumnType("float");
 
                     b.Property<int?>("Height_cm")
@@ -127,15 +131,18 @@ namespace PMS.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("HxOfOtherMSKInjuriesAndPains")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("Hypertension")
                         .HasColumnType("bit");
 
                     b.Property<string>("IatrogenicFactors")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("IndicationForAdmissionToTheICU")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("IsDeleted")
@@ -148,6 +155,7 @@ namespace PMS.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("ModifiedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("ModifiedDate")
@@ -160,6 +168,7 @@ namespace PMS.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("NoofDaysInTheHospital")
@@ -169,9 +178,11 @@ namespace PMS.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Other1")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Other2")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("OtherBoneDissordersInLimbs_congenital")
@@ -181,6 +192,7 @@ namespace PMS.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Others")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("PainTolerance_PostOpD1")
@@ -189,7 +201,7 @@ namespace PMS.Infrastructure.Migrations
                     b.Property<int?>("PainTolerance_beforeDischarge")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PatientCategories")
+                    b.Property<int>("PatientCategories")
                         .HasColumnType("int");
 
                     b.Property<int>("PatientId")
@@ -345,7 +357,7 @@ namespace PMS.Infrastructure.Migrations
                     b.Property<int?>("QuadricepMuscleRupture_Late")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ReasonId")
+                    b.Property<int>("ReasonId")
                         .HasColumnType("int");
 
                     b.Property<bool?>("Renal")
@@ -382,6 +394,7 @@ namespace PMS.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Surgery")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("SurgicalWoundComplication_1st")
@@ -405,19 +418,21 @@ namespace PMS.Infrastructure.Migrations
                     b.Property<int?>("TotalOperativeRoomTime_min")
                         .HasColumnType("int");
 
-                    b.Property<bool?>("TranexamicAcidGivenOrNot")
+                    b.Property<bool>("TranexamicAcidGivenOrNot")
                         .HasColumnType("bit");
 
-                    b.Property<double?>("Weight")
+                    b.Property<double>("Weight")
                         .HasColumnType("float");
 
                     b.Property<int?>("Weight_kg")
                         .HasColumnType("int");
 
                     b.Property<string>("bht")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("other")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -434,21 +449,24 @@ namespace PMS.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Allergic")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BloodGroup")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ContactNumber")
+                    b.Property<int>("ContactNumber")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("DateOfBirth")
+                    b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("EmergencyContactNo")
+                    b.Property<int>("EmergencyContactNo")
                         .HasColumnType("int");
 
                     b.Property<string>("FirstName")
@@ -456,18 +474,15 @@ namespace PMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Gender")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MedicalHistory")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("insuranceInfomation")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("nic")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

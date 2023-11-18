@@ -11,31 +11,37 @@ namespace UnitOfWorkDemo.Core.Models
         public string FirstName { get; set; }
 
         [AllowNull]
-        public string LastName { get; set; }
+        public string? LastName { get; set; }
 
         [AllowNull]
-        public DateTime DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
 
         [AllowNull]
-        public string Gender { get; set; }
+        public string? Gender { get; set; }
 
         [AllowNull]
-        public int ContactNumber { get; set; }
+        public int? ContactNumber { get; set; }
 
         [AllowNull]
-        public string Address { get; set; }
+        public string? Address { get; set; }
 
         [AllowNull]
-        public int EmergencyContactNo { get; set; }
+        public int? EmergencyContactNo { get; set; }
 
         [AllowNull]
-        public string BloodGroup { get; set; }
+        public string? BloodGroup { get; set; }
 
         [AllowNull]
-        public string MedicalHistory { get; set; }
+        public string? MedicalHistory { get; set; }
 
         [AllowNull]
-        public string Allergic { get; set; }
+        public string? Allergic { get; set; }
+
+        [AllowNull]
+        public string? insuranceInfomation { get; set; }
+
+        [AllowNull]
+        public string? nic { get; set; }
     }
 
 }
