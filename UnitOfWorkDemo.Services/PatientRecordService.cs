@@ -88,7 +88,8 @@ namespace UnitOfWorkDemo.Services
                         var originalValue = property.GetValue(patientRecord);
                         var newValue = property.GetValue(patientRecordDetails);
 
-                        if (originalValue == null && newValue != null || !originalValue.Equals(newValue))
+                        if ((originalValue == null && newValue != null) ||
+                            (originalValue != null && !originalValue.Equals(newValue)))
                         {
                             // Update the property if it has changed
                             property.SetValue(patientRecord, newValue);
@@ -96,7 +97,7 @@ namespace UnitOfWorkDemo.Services
                     }
 
                     // Mark the entity as modified
-                   _unitOfWork.PatientRecord.Update(patientRecord);
+                    _unitOfWork.PatientRecord.Update(patientRecord);
 
                     var result = _unitOfWork.Save();// Assuming SaveAsync is asynchronous
 
