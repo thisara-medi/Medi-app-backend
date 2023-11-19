@@ -40,5 +40,6 @@ namespace PMS.Core.Models.DTO
 
         [AllowNull]
         public string Allergic { get; set; }
+        public string NIC { get; set; }
     }
 }

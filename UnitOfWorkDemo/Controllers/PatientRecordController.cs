@@ -28,7 +28,7 @@ namespace PMS.Endpoints.Controllers
         [HttpGet("GetPatientRecordList")]
         public async Task<IActionResult> GetPatientRecordList()
         {
-            var results = await _patientRecordService.GetAllpatientRecords();
+            var results = await _patientRecordService.GetPatientRecordsAsQuarable().ToListAsync();
             if (results == null)
             {
                 return NotFound();

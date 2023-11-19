@@ -26,7 +26,6 @@ namespace UnitOfWorkDemo.Services
                 int result = -1;
                 try
                 {
-                    
                     await _unitOfWork.Patient.Add(new Patient()
                     {
                         Address = patientDetails.Address,
@@ -38,6 +37,7 @@ namespace UnitOfWorkDemo.Services
                         EmergencyContactNo = patientDetails.EmergencyContactNo,
                         FirstName = patientDetails.FirstName,
                         Gender = patientDetails.Gender,
+                        NIC = patientDetails.NIC,
                         MedicalHistory = patientDetails.MedicalHistory
                     });
 
