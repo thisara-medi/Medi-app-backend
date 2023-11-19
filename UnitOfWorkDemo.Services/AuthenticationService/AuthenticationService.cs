@@ -11,6 +11,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using UnitOfWorkDemo.Core.Interfaces;
+using UnitOfWorkDemo.Infrastructure.Repositories;
 
 namespace PMS.Services.AuthenticationService
 {
@@ -19,6 +20,7 @@ namespace PMS.Services.AuthenticationService
         private readonly IUnitOfWork _unitOfWork;
         private readonly TokenService _tokenService;
         private readonly IMapper _mapper;
+
 
         public AuthenticationService(IUnitOfWork unitOfWork, TokenService tokenService, IMapper mapper)
         {
@@ -52,7 +54,6 @@ namespace PMS.Services.AuthenticationService
         }
     }
 }
-
       
     
 

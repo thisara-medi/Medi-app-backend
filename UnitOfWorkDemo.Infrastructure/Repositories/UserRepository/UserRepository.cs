@@ -8,11 +8,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnitOfWorkDemo.Core.Interfaces;
 using UnitOfWorkDemo.Infrastructure;
+using UnitOfWorkDemo.Infrastructure.Repositories;
 
 namespace PMS.Infrastructure.Repositories.UserRepository
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository :  IUserRepository
     {
         private readonly DbContextClass _context;
         private readonly IMapper _mapper;
