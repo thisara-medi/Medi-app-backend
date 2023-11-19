@@ -11,6 +11,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using UnitOfWorkDemo.Core.Interfaces;
+using UnitOfWorkDemo.Infrastructure.Repositories;
 
 namespace PMS.Services.AuthenticationService
 {
@@ -20,38 +21,39 @@ namespace PMS.Services.AuthenticationService
         private readonly TokenService _tokenService;
         private readonly IMapper _mapper;
 
+
         public AuthenticationService(IUnitOfWork unitOfWork, TokenService tokenService, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _tokenService = tokenService;
             _mapper = mapper;
         }
-        public async Task<LoginDto> LoginUser(string username, string password)
+        public async Task<LoginDto> LoginUser(LoginDto loginDto)
         {
-            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            if (string.IsNullOrEmpty(loginDto.Username) || string.IsNullOrEmpty(loginDto.Password))
             {
                 throw new ArgumentException("Invalid username or password");
             }
-            var user = await _unitOfWork.UserRepository.FindUserByUsernameAndPasswordAsync(username, password);
 
+            var user = await _unitOfWork.UserRepository.FindUserByUsernameAndPasswordAsync(loginDto);
 
             if (user == null)
             {
                 throw new UnauthorizedAccessException("Invalid username or password");
             }
-            var token = _tokenService.GenerateToken(TokenGenerate.SecretKey, _tokenService.DefaultIssuer, _tokenService.DefaultAudience, username);
+
+            var token = _tokenService.GenerateToken(TokenGenerate.SecretKey, _tokenService.DefaultIssuer, _tokenService.DefaultAudience, loginDto.Username);
 
             await _unitOfWork.CompleteAsync();
 
-            var loginDto = _mapper.Map<LoginDto>(user);
+            var mappedLoginDto = _mapper.Map<LoginDto>(user);
 
-            loginDto.Token = token;
+            mappedLoginDto.Token = token;
 
-            return loginDto;
+            return mappedLoginDto;
         }
     }
 }
-
       
     
 
