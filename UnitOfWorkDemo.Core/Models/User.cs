@@ -9,7 +9,8 @@ namespace PMS.Core.Models
 {
     public class User
     {
-      
+        public int Id { get; set; }
+
         [Required(ErrorMessage = "User Name is required")]
         public string Username { get; set; }
 

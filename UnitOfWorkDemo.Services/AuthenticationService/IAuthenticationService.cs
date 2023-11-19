@@ -10,6 +10,6 @@ namespace PMS.Services.AuthenticationService
 {
     public interface IAuthenticationService
     {
-        Task<LoginDto> LoginUser(string username, string password);
+        Task<LoginDto> LoginUser(LoginDto loginDto);
     }
 }
