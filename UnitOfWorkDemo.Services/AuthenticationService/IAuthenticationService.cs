@@ -1,4 +1,5 @@
 ﻿using PMS.Core.Models;
+using PMS.Core.Models.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace PMS.Services.AuthenticationService
 {
     public interface IAuthenticationService
     {
-        Task<User> LoginUser(User user);
+        Task<LoginDto> LoginUser(LoginDto loginDto);
     }
 }

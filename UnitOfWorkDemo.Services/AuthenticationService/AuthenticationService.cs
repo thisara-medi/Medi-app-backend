@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using AutoMapper;
+using Microsoft.IdentityModel.Tokens;
 using PMS.Core.Models;
 using PMS.Core.Models.DTO;
 using PMS.Endpoints;
@@ -10,6 +11,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using UnitOfWorkDemo.Core.Interfaces;
+using UnitOfWorkDemo.Infrastructure.Repositories;
 
 namespace PMS.Services.AuthenticationService
 {
@@ -17,44 +19,44 @@ namespace PMS.Services.AuthenticationService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly TokenService _tokenService;
-       
-       
+        private readonly IMapper _mapper;
 
-        public AuthenticationService(IUnitOfWork unitOfWork, TokenService tokenService)
+
+        public AuthenticationService(IUnitOfWork unitOfWork, TokenService tokenService, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _tokenService = tokenService;
+            _mapper = mapper;
         }
-
-
-
-        public async Task<User> LoginUser(User user)
+        public async Task<LoginDto> LoginUser(LoginDto loginDto)
         {
-            // Validate the incoming model
-            if (user == null || string.IsNullOrEmpty(user.Username) || string.IsNullOrEmpty(user.Password))
+            if (string.IsNullOrEmpty(loginDto.Username) || string.IsNullOrEmpty(loginDto.Password))
             {
-                throw new ArgumentException("Invalid model");
+                throw new ArgumentException("Invalid username or password");
             }
 
-            var userModel = await _unitOfWork.UserRepository.FindUserByUsernameAndPasswordAsync(user.Username, user.Password);
+            var user = await _unitOfWork.UserRepository.FindUserByUsernameAndPasswordAsync(loginDto);
 
-           
             if (user == null)
             {
                 throw new UnauthorizedAccessException("Invalid username or password");
             }
 
-            var token = _tokenService.GenerateToken(TokenGenerate.SecretKey, user.Username);
+            var token = _tokenService.GenerateToken(TokenGenerate.SecretKey, _tokenService.DefaultIssuer, _tokenService.DefaultAudience, loginDto.Username);
 
-         
             await _unitOfWork.CompleteAsync();
 
-            return (User)token;
-        }
+            var mappedLoginDto = _mapper.Map<LoginDto>(user);
 
-       
+            mappedLoginDto.Token = token;
+
+            return mappedLoginDto;
+        }
     }
 }
+      
+    
+
 
 
 

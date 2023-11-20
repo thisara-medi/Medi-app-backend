@@ -1,32 +1,29 @@
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using PMS.Endpoints.Mappings;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.IO;
 using System.Text;
 using UnitOfWorkDemo.Infrastructure.ServiceExtension;
 using UnitOfWorkDemo.Services;
 using UnitOfWorkDemo.Services.Interfaces;
-
-var configuration = new ConfigurationBuilder()
-           .SetBasePath(Directory.GetCurrentDirectory())
-           .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-           .Build();
-
-var appSettings = configuration.GetSection("jwtSettings");
+using PMS.Services.AuthenticationService;
+using PMS.Services;
+using UnitOfWorkDemo.Core.Interfaces;
+using PMS.Endpoints.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddDIServices(builder.Configuration);
-builder.Services.AddScoped<IPatientService, PatientService>();
-builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+// Configuration
+var configuration = new ConfigurationBuilder()
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .Build();
+var jwtSettings = configuration.GetSection("jwtSettings");
 
-builder.Services.AddScoped<IPatientRecordService, PatientRecordService>();
-builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
-
-
+// Services
 builder.Services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
 {
     builder.AllowAnyOrigin()
@@ -34,13 +31,23 @@ builder.Services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
            .AllowAnyHeader();
 }));
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddDIServices(builder.Configuration);
 
-var jwtSettings = configuration.GetSection("jwtSettings");
-// Configure JWT authentication
+builder.Services.AddScoped<IPatientService, PatientService>();
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+builder.Services.AddScoped<IPatientRecordService, PatientRecordService>();
+builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
+builder.Services.AddScoped<AuthenticationService>();
+builder.Services.AddScoped<TokenService>(provider =>
+{
+    var unitOfWork = provider.GetRequiredService<IUnitOfWork>();
+    var defaultIssuer = jwtSettings["Issuer"];
+    var defaultAudience = jwtSettings["Audience"];
+
+    return new TokenService(unitOfWork, defaultIssuer, defaultAudience);
+});
+builder.Services.AddControllers();
+// Authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -55,11 +62,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]))
         };
     });
-
+builder.Services.AddAuthorization();
+builder.Services.AddSwaggerGen();
+// Application
 var app = builder.Build();
-
-
-    
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -69,12 +75,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors("MyPolicy");
-
 app.UseHttpsRedirection();
 app.UseAuthentication();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();

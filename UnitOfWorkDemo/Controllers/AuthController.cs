@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
 using PMS.Core.Models;
+using PMS.Core.Models.DTO;
 using PMS.Services.AuthenticationService;
 using UnitOfWorkDemo.Core.Interfaces;
 
@@ -11,34 +12,34 @@ namespace PMS.Endpoints.Controllers
     public class AuthController : ControllerBase
     {
         private readonly AuthenticationService _authenticationService;
-        private readonly IUnitOfWork _unitOfWork;
-
-
-        public AuthController(AuthenticationService authenticationService, IUnitOfWork unitOfWork)
+    
+        public AuthController(AuthenticationService authenticationService)
         {
             _authenticationService = authenticationService;
-            _unitOfWork = unitOfWork;
 
         }
-
-
-          [HttpPost("login")]
-            public async Task<IActionResult> Login([FromBody] User model)
-            {
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] User user)
+        {
             try
             {
-                var token = await _authenticationService.LoginUser(model);
+                var loginDto = new LoginDto
+                {
+                    Id = user.Id,
+                    Username = user.Username,
+                    Password = user.Password,
+                    Token = ""
+                };
+                var token = await _authenticationService.LoginUser(loginDto);
                 return Ok(new { Token = token });
             }
-            catch (ArgumentException ex)
+            catch (Exception ex)
             {
-                return BadRequest(ex.Message);
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                return Unauthorized(ex.Message);
+
+                return BadRequest(new { Message = ex.Message });
             }
         }
+    }
 
     }
-}
+

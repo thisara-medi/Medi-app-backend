@@ -12,6 +12,7 @@ namespace PMS.Endpoints.Mappings
             CreateMap<PatientDTO, Patient>().ReverseMap();
 
             CreateMap<PatientRecord, PatientRecordDTO>().ReverseMap();
+            CreateMap<User, LoginDto>().ReverseMap();
 
         }
 

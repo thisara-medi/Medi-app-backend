@@ -16,21 +16,20 @@ namespace UnitOfWorkDemo.Infrastructure.Repositories
         private readonly DbContextClass _dbContext;
         public IPatientRepository Patient { get; }
         public IPatientRecordRepository PatientRecord { get; }
-        private IUserRepository _userRepository { get; }
+        public IUserRepository UserRepository { get; }
+
         private readonly IMapper _mapper;
 
         public UnitOfWork(DbContextClass dbContext, IMapper mapper,
-                            IPatientRepository PatientRepository, IPatientRecordRepository patientRecordRepository,IUserRepository userRepository)
+                            IPatientRepository PatientRepository, IPatientRecordRepository patientRecordRepository, IUserRepository userRepository)
         {
             _dbContext = dbContext;
             _mapper = mapper;
             Patient = PatientRepository;
             PatientRecord = patientRecordRepository;
-            _userRepository = userRepository;
+            UserRepository = userRepository;
         }
-        public IUserRepository UserRepository { get; private set; }
-
-
+  
         public int Save()
         {
             return _dbContext.SaveChanges();
