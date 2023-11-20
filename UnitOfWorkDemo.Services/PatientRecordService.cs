@@ -80,16 +80,28 @@ namespace UnitOfWorkDemo.Services
                 var patientRecord = await _unitOfWork.PatientRecord.GetById(patientRecordDetails.PatientMedicalRecordID);
                 if(patientRecord != null)
                 {
-                    patientRecord = patientRecordDetails;
+                    var type = typeof(PatientMedicalRecordDetails);
+                    var properties = type.GetProperties();
 
+                    foreach (var property in properties)
+                    {
+                        var originalValue = property.GetValue(patientRecord);
+                        var newValue = property.GetValue(patientRecordDetails);
+
+                        if ((originalValue == null && newValue != null) ||
+                            (originalValue != null && !originalValue.Equals(newValue)))
+                        {
+                            // Update the property if it has changed
+                            property.SetValue(patientRecord, newValue);
+                        }
+                    }
+
+                    // Mark the entity as modified
                     _unitOfWork.PatientRecord.Update(patientRecord);
 
-                    var result = _unitOfWork.Save();
+                    var result = _unitOfWork.Save();// Assuming SaveAsync is asynchronous
 
-                    if (result > 0)
-                        return true;
-                    else
-                        return false;
+                    return result > 0;
                 }
             }
             return false;

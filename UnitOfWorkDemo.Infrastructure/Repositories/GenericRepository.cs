@@ -14,6 +14,7 @@ namespace UnitOfWorkDemo.Infrastructure.Repositories
 
         protected GenericRepository(DbContextClass context)
         {
+            
             _dbContext = context;
         }
 
@@ -40,9 +41,9 @@ namespace UnitOfWorkDemo.Infrastructure.Repositories
             _dbContext.Set<T>().Remove(entity);
         }
 
-        public void Update(T entity)
-        {
-            _dbContext.Set<T>().Update(entity);
+        public virtual void Update(T entity)
+        {     
+           _dbContext.Set<T>().Update(entity);
         }
     }
 }

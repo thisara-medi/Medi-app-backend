@@ -21,5 +21,6 @@ namespace UnitOfWorkDemo.Infrastructure
 
         public DbSet<Patient> Patients { get; set; }
         public DbSet<PatientMedicalRecordDetails> PatientRecord { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }
