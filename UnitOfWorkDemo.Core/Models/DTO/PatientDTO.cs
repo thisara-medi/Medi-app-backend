@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PMS.Core.Models.DTO
 {
-    public class PatientDTO
+    public class PatientDto
     {
         public int Id { get; set; }
 
@@ -45,6 +45,7 @@ namespace PMS.Core.Models.DTO
         public string? insuranceInfomation { get; set; }
 
         [AllowNull]
-        public string? nic { get; set; }
+        public string Allergic { get; set; }
+        public string NIC { get; set; }
     }
 }

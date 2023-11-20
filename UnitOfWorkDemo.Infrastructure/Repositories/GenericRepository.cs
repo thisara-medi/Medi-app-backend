@@ -22,7 +22,10 @@ namespace UnitOfWorkDemo.Infrastructure.Repositories
         {
             return await _dbContext.Set<T>().FindAsync(id);
         }
-
+        public async Task<T> GetById(long id)
+        {
+            return await _dbContext.Set<T>().FindAsync(id);
+        }
         public async Task<IEnumerable<T>> GetAll()
         {
             return await _dbContext.Set<T>().ToListAsync();

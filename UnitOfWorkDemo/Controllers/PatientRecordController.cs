@@ -1,7 +1,12 @@
-﻿using AutoMapper;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using PMS.Core.Models;
-using PMS.Core.Models.DTO;
+using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Web.Helpers;
 using UnitOfWorkDemo.Services;
 using UnitOfWorkDemo.Services.Interfaces;
 
@@ -14,25 +19,121 @@ namespace PMS.Endpoints.Controllers
     public class PatientRecordController : ControllerBase
     {
         public readonly IPatientRecordService _patientRecordService;
-        private readonly IMapper mapper;
 
-        public PatientRecordController(IPatientRecordService patientRecordService, IMapper mapper)
+        public PatientRecordController(IPatientRecordService patientRecordService)
         {
             this._patientRecordService = patientRecordService;
-            this.mapper = mapper;
         }
 
         [HttpGet("GetPatientRecordList")]
         public async Task<IActionResult> GetPatientRecordList()
         {
-            var productDetailsList = await _patientRecordService.GetAllpatientRecords();
-            if (productDetailsList == null)
+            var results = await _patientRecordService.GetPatientRecordsAsQuarable().ToListAsync();
+            if (results == null)
             {
                 return NotFound();
             }
-            return Ok(mapper.Map<List<PatientRecordDTO>>(productDetailsList));
+            // Use JsonSerializerOptions with ReferenceHandler.Preserve
+            var jsonOptions = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            };
+
+            // Serialize the results to JSON
+            var json = JsonConvert.SerializeObject(results, jsonOptions);
+
+            return Ok(JsonConvert.DeserializeObject<List<PatientMedicalRecordDetails>>(json));
         }
 
+        [HttpGet("GetPatientRecordsBySearchString/{searchstring}")]
+        public async Task<IActionResult> GetPatientRecordsBySearchString(string searchstring)
+        {
+            string[] searchstrings = searchstring.Split(',','/','|');
+
+            var patientRecords = _patientRecordService.GetPatientRecordsAsQuarable();
+             
+            if (searchstrings.Count()>= 1 && !string.IsNullOrWhiteSpace(searchstrings[0]))
+            {
+                var name = searchstrings[0];
+                patientRecords = patientRecords.Where(x => (x.PatientProfile.FirstName + x.PatientProfile.LastName).Contains(name));
+            }
+             
+            if (searchstrings.Count() >= 2 && !string.IsNullOrWhiteSpace(searchstrings[1]))
+            {
+                var userId = searchstrings[1];
+                patientRecords = patientRecords.Where(x => x.PatientProfileID.ToString().Contains(userId));
+            }
+             
+            if (searchstrings.Count() >= 3 && !string.IsNullOrWhiteSpace(searchstrings[2]))
+            {
+                patientRecords = patientRecords.Where(x => x.PatientProfile.NIC.Contains(searchstrings[2], StringComparison.OrdinalIgnoreCase));
+            }
+
+            var results = patientRecords.ToList();
+            if (results == null)
+            {
+                return NotFound();
+            }
+            // Use JsonSerializerOptions with ReferenceHandler.Preserve
+            var jsonOptions = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            };
+
+            // Serialize the results to JSON
+            var json = JsonConvert.SerializeObject(results, jsonOptions);
+
+            return Ok(JsonConvert.DeserializeObject<List<PatientMedicalRecordDetails>>(json));
+        }
+
+
+        [HttpGet("GetPatientRecordsByReason/{reason}")]
+        public async Task<IActionResult> GetPatientRecordsByReason(string reason)
+        {
+            var results = await _patientRecordService.GetPatientRecordsAsQuarable().Where(x=> x.Reason.ReasonDescription.ToLower().Contains(reason.ToLower())).ToListAsync();
+
+            if (results != null)
+            {
+                // Use JsonSerializerOptions with ReferenceHandler.Preserve
+                var jsonOptions = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                };
+
+                // Serialize the results to JSON
+                var json = JsonConvert.SerializeObject(results, jsonOptions);
+
+                return Ok(JsonConvert.DeserializeObject<List<PatientMedicalRecordDetails>>(json));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet("GetPatientRecordsByDate/")]
+        public async Task<IActionResult> GetPatientRecordsByDate(DateTime fromdate, DateTime? todate)
+        {
+            var results = await _patientRecordService.GetPatientRecordsAsQuarable().Where(x => x.CreatedDate>= fromdate && x.CreatedDate<=todate).ToListAsync();
+
+            if (results != null)
+            {
+                // Use JsonSerializerOptions with ReferenceHandler.Preserve
+                var jsonOptions = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                };
+
+                // Serialize the results to JSON
+                var json = JsonConvert.SerializeObject(results, jsonOptions);
+
+                return Ok(JsonConvert.DeserializeObject<List<PatientMedicalRecordDetails>>(json));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
 
         [HttpGet("GetPatientRecordById/{patientRecordId}")]
         public async Task<IActionResult> GetPatientRecordById(int patientId)
@@ -41,7 +142,7 @@ namespace PMS.Endpoints.Controllers
 
             if (patientDetails != null)
             {
-                return Ok(mapper.Map<PatientRecordDTO>(patientDetails));
+                return Ok(patientDetails);
             }
             else
             {
@@ -51,14 +152,13 @@ namespace PMS.Endpoints.Controllers
 
 
         [HttpPost("AddPatientRecord")]
-        public async Task<IActionResult> AddPatientRecord(PatientRecordDTO patientDetailsDto)
+        public async Task<IActionResult> AddPatientRecord(PatientMedicalRecordDetails patientDetails)
         {
-            var patientDetails = mapper.Map<PatientRecord>(patientDetailsDto);
             var isPatientCreated = await _patientRecordService.CreatePatientRecord(patientDetails);
 
             if (isPatientCreated)
             {
-                return Ok(mapper.Map<PatientRecordDTO>(patientDetails));
+                return Ok(isPatientCreated);
             }
             else
             {
@@ -68,15 +168,14 @@ namespace PMS.Endpoints.Controllers
 
 
         [HttpPut("UpdatePatientRecord")]
-        public async Task<IActionResult> UpdatePatientRecord(PatientRecordDTO patientDetailsDto)
+        public async Task<IActionResult> UpdatePatientRecord(PatientMedicalRecordDetails patientDetails)
         {
-            if (patientDetailsDto != null)
+            if (patientDetails != null)
             {
-                var patientDetails = mapper.Map<PatientRecord>(patientDetailsDto);
                 var isPatientUpdated = await _patientRecordService.UpdatePatientRecord(patientDetails);
                 if (isPatientUpdated)
                 {
-                    return Ok(mapper.Map<PatientRecordDTO>(patientDetailsDto));
+                    return Ok(isPatientUpdated);
                 }
                 return BadRequest();
             }

@@ -1,10 +1,13 @@
 ﻿
+using PMS.Core.Models;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
 namespace UnitOfWorkDemo.Core.Models
 {
     public class Patient
     {
+        [Key]
         public int Id { get; set; }
 
         [AllowNull]
@@ -14,7 +17,8 @@ namespace UnitOfWorkDemo.Core.Models
         public string? LastName { get; set; }
 
         [AllowNull]
-        public DateTime? DateOfBirth { get; set; }
+        public DateTime DateOfBirth { get; set; }
+        public string NIC { get; set; }
 
         [AllowNull]
         public string? Gender { get; set; }
@@ -41,7 +45,9 @@ namespace UnitOfWorkDemo.Core.Models
         public string? insuranceInfomation { get; set; }
 
         [AllowNull]
-        public string? nic { get; set; }
+        public string Allergic { get; set; }
+
+        public ICollection<PatientMedicalRecordDetails> PatientMedicalRecordDetails { get; set; }
     }
 
 }
