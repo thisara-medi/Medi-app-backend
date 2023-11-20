@@ -8,7 +8,7 @@ namespace UnitOfWorkDemo.Core.Models
         public int Id { get; set; }
 
         [AllowNull]
-        public string FirstName { get; set; }
+        public string? FirstName { get; set; }
 
         [AllowNull]
         public string? LastName { get; set; }
