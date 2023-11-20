@@ -9,9 +9,9 @@ namespace PMS.Endpoints.Mappings
     {
         public AutoMapperProfiles()
         {
-            CreateMap<PatientDTO, Patient>().ReverseMap();
+            CreateMap<PatientDto, Patient>().ReverseMap();
 
-            CreateMap<PatientRecord, PatientRecordDTO>().ReverseMap();
+            CreateMap<PatientMedicalRecordDetails, PatientRecordDTO>().ReverseMap();
 
         }
 

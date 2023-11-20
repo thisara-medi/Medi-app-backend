@@ -4,23 +4,23 @@
 
 namespace PMS.Infrastructure.Migrations
 {
-    public partial class reasonId : Migration
+    public partial class NICnumberadded : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "ReasonId",
-                table: "PatientRecord",
-                type: "int",
+            migrationBuilder.AddColumn<string>(
+                name: "NIC",
+                table: "Patients",
+                type: "nvarchar(max)",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: "");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "ReasonId",
-                table: "PatientRecord");
+                name: "NIC",
+                table: "Patients");
         }
     }
 }

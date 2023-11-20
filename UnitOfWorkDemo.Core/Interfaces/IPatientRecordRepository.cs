@@ -4,8 +4,11 @@ using UnitOfWorkDemo.Core.Models;
 
 namespace UnitOfWorkDemo.Core.Interfaces
 {
-    public interface IPatientRecordRepository : IGenericRepository<PatientRecord>
+    public interface IPatientRecordRepository : IGenericRepository<PatientMedicalRecordDetails>
     {
-         Task<List<PatientRecord>>GetRecordByPatientId(int patientId);
+        IQueryable<PatientMedicalRecordDetails> GetPatientRecordsById(string patientId);
+        IQueryable<PatientMedicalRecordDetails> GetPatientRecordsAsQuarable();
+        IQueryable<PatientMedicalRecordDetails> GetPatientRecordsByPatientName(string patientName);
+        Task<List<PatientMedicalRecordDetails>>GetRecordByPatientId(int patientId);
     }
 }
