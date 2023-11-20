@@ -1,6 +1,7 @@
 ﻿using PMS.Core.Models.DTO;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -60,16 +61,23 @@ namespace UnitOfWorkDemo.Services
         {
             if (patientId > 0)
             {
-                var patientDetails = await _unitOfWork.Patient.GetById(patientId);
-                if (patientDetails != null)
+                try
                 {
-                    _unitOfWork.Patient.Delete(patientDetails);
-                    var result = _unitOfWork.Save();
+                    Patient patientDetails = await _unitOfWork.Patient.GetById(patientId);
+                    if (patientDetails != null)
+                    {
+                        _unitOfWork.Patient.Delete(patientDetails);
+                        var result = _unitOfWork.Save();
 
-                    if (result > 0)
-                        return true;
-                    else
-                        return false;
+                        if (result > 0)
+                            return true;
+                        else
+                            return false;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
                 }
             }
             return false;

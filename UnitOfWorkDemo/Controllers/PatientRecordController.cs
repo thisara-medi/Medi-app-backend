@@ -90,7 +90,7 @@ namespace PMS.Endpoints.Controllers
         [HttpGet("GetPatientRecordsByReason/{reason}")]
         public async Task<IActionResult> GetPatientRecordsByReason(string reason)
         {
-            var results = await _patientRecordService.GetPatientRecordsAsQuarable().Where(x=> x.Reason.ReasonDescription.Contains(reason)).ToListAsync();
+            var results = await _patientRecordService.GetPatientRecordsAsQuarable().Where(x=> x.Reason.ReasonDescription.ToLower().Contains(reason.ToLower())).ToListAsync();
 
             if (results != null)
             {
