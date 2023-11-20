@@ -45,7 +45,6 @@ namespace PMS.Core.Models.DTO
         public string? insuranceInfomation { get; set; }
 
         [AllowNull]
-        public string Allergic { get; set; }
         public string NIC { get; set; }
     }
 }
