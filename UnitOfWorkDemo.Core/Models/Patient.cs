@@ -17,7 +17,7 @@ namespace UnitOfWorkDemo.Core.Models
         public string? LastName { get; set; }
 
         [AllowNull]
-        public DateTime DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
         public string NIC { get; set; }
 
         [AllowNull]
@@ -43,9 +43,6 @@ namespace UnitOfWorkDemo.Core.Models
 
         [AllowNull]
         public string? insuranceInfomation { get; set; }
-
-        [AllowNull]
-        public string Allergic { get; set; }
 
         public ICollection<PatientMedicalRecordDetails> PatientMedicalRecordDetails { get; set; }
     }

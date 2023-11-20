@@ -80,7 +80,7 @@ namespace UnitOfWorkDemo.Services
                 var patientRecord = await _unitOfWork.PatientRecord.GetById(patientRecordDetails.PatientMedicalRecordID);
                 if(patientRecord != null)
                 {
-                    var type = typeof(PatientRecord);
+                    var type = typeof(PatientMedicalRecordDetails);
                     var properties = type.GetProperties();
 
                     foreach (var property in properties)

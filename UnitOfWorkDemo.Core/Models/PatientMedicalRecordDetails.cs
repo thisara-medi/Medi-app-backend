@@ -17,14 +17,14 @@ namespace PMS.Core.Models
 
         [ForeignKey("Patient")]
         public int PatientProfileID { get; set; }
-        public virtual Patient PatientProfile { get; set; }
+        public virtual Patient? PatientProfile { get; set; }
 
         public PatientCategories PatientTypeID { get; set; }
         public long BHTNumber { get; set; }
 
         [ForeignKey("Reason")]
         public long ReasonID { get; set; }
-        public virtual Reason Reason { get; set; }
+        public virtual Reason? Reason { get; set; }
 
         public string? Surgery { get; set; }
         public string? IndicationForTheSurgery { get; set; }
