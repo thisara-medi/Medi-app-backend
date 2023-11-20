@@ -11,9 +11,12 @@ namespace UnitOfWorkDemo.Controllers
     public class PatientController : ControllerBase
     {
         public readonly IPatientService _patientService;
-        public PatientController(IPatientService patientService,)
+        public IMapper Mapper { get; }
+
+        public PatientController(IPatientService patientService,IMapper mapper)
         {
             _patientService = patientService;
+            Mapper = mapper;
         }
 
         /// <summary>
@@ -81,8 +84,8 @@ namespace UnitOfWorkDemo.Controllers
         {
             if (patientDetails != null)
             {
-                var mappedPatient = _mapper
-                var isPatientUpdated = await _patientService.UpdatePatient(patientDetails);
+                var mappedPatient = Mapper.Map<Patient>(patientDetails);
+                var isPatientUpdated = await _patientService.UpdatePatient(mappedPatient);
                 if (isPatientUpdated)
                 {
                     return Ok(isPatientUpdated);

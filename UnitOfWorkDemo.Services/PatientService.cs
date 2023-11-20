@@ -101,7 +101,17 @@ namespace UnitOfWorkDemo.Services
                 var patient = await _unitOfWork.Patient.GetById(patientDetails.Id);
                 if(patient != null)
                 {
-                    patient = patientDetails;
+                    patient.FirstName = patientDetails.FirstName;
+                    patient.LastName = patientDetails.LastName;
+                    patient.DateOfBirth = patientDetails.DateOfBirth;
+                    patient.Gender = patientDetails.Gender;
+                    patient.ContactNumber = patientDetails.ContactNumber;
+                    patient.Address = patientDetails.Address;
+                    patient.EmergencyContactNo = patientDetails.EmergencyContactNo;
+                    patient.BloodGroup = patientDetails.BloodGroup;
+                    patient.MedicalHistory = patientDetails.MedicalHistory;
+                    patient.Allergic = patientDetails.Allergic;
+                    patient.NIC = patientDetails.NIC;
 
                     _unitOfWork.Patient.Update(patient);
 
