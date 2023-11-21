@@ -54,4 +54,4 @@ jobs:
           app-name: 'PmsEndpoints'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_FDA6058E21114DCFA1AD19876151A2AC }}
+          publish-profile: ${{ secrets.MEDICECRETE }}
