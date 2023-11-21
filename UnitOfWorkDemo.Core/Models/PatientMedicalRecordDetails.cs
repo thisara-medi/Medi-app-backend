@@ -13,7 +13,7 @@ namespace PMS.Core.Models
     public class PatientMedicalRecordDetails
     {
         [Key]
-        public long PatientMedicalRecordID { get; set; }
+        public int PatientMedicalRecordID { get; set; }
 
         [ForeignKey("Patient")]
         public int PatientProfileID { get; set; }
@@ -23,7 +23,7 @@ namespace PMS.Core.Models
         public long BHTNumber { get; set; }
 
         [ForeignKey("Reason")]
-        public long ReasonID { get; set; }
+        public long? ReasonID { get; set; }
         public virtual Reason? Reason { get; set; }
 
         public string? Surgery { get; set; }

@@ -64,12 +64,12 @@ namespace PMS.Infrastructure.Migrations
                 name: "PatientRecord",
                 columns: table => new
                 {
-                    PatientMedicalRecordID = table.Column<long>(type: "bigint", nullable: false)
+                    PatientMedicalRecordID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PatientProfileID = table.Column<int>(type: "int", nullable: false),
                     PatientTypeID = table.Column<int>(type: "int", nullable: false),
                     BHTNumber = table.Column<long>(type: "bigint", nullable: false),
-                    ReasonID = table.Column<long>(type: "bigint", nullable: false),
+                    ReasonID = table.Column<long>(type: "bigint", nullable: true),
                     Surgery = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IndicationForTheSurgery = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IndicationForAdmissionToTheICU = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -207,8 +207,7 @@ namespace PMS.Infrastructure.Migrations
                         name: "FK_PatientRecord_Reason_ReasonID",
                         column: x => x.ReasonID,
                         principalTable: "Reason",
-                        principalColumn: "ReasonID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "ReasonID");
                 });
 
             migrationBuilder.CreateIndex(
