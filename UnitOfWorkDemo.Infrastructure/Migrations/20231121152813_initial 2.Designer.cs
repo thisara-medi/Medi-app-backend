@@ -12,8 +12,8 @@ using UnitOfWorkDemo.Infrastructure;
 namespace PMS.Infrastructure.Migrations
 {
     [DbContext(typeof(DbContextClass))]
-    [Migration("20231120194641_set nullable reason id")]
-    partial class setnullablereasonid
+    [Migration("20231121152813_initial 2")]
+    partial class initial2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,11 +26,11 @@ namespace PMS.Infrastructure.Migrations
 
             modelBuilder.Entity("PMS.Core.Models.PatientMedicalRecordDetails", b =>
                 {
-                    b.Property<long>("PatientMedicalRecordID")
+                    b.Property<int>("PatientMedicalRecordID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("PatientMedicalRecordID"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PatientMedicalRecordID"), 1L, 1);
 
                     b.Property<long>("BHTNumber")
                         .HasColumnType("bigint");

@@ -12,7 +12,7 @@ using UnitOfWorkDemo.Infrastructure;
 namespace PMS.Infrastructure.Migrations
 {
     [DbContext(typeof(DbContextClass))]
-    [Migration("20231120123046_initial")]
+    [Migration("20231121132459_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,11 +26,11 @@ namespace PMS.Infrastructure.Migrations
 
             modelBuilder.Entity("PMS.Core.Models.PatientMedicalRecordDetails", b =>
                 {
-                    b.Property<long>("PatientMedicalRecordID")
+                    b.Property<int>("PatientMedicalRecordID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("PatientMedicalRecordID"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PatientMedicalRecordID"), 1L, 1);
 
                     b.Property<long>("BHTNumber")
                         .HasColumnType("bigint");
@@ -347,7 +347,7 @@ namespace PMS.Infrastructure.Migrations
                     b.Property<string>("QuadricepMuscleRupture_Late")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("ReasonID")
+                    b.Property<long?>("ReasonID")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Renal")
@@ -520,9 +520,7 @@ namespace PMS.Infrastructure.Migrations
 
                     b.HasOne("PMS.Core.Models.Reason", "Reason")
                         .WithMany()
-                        .HasForeignKey("ReasonID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ReasonID");
 
                     b.Navigation("PatientProfile");
 

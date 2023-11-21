@@ -24,11 +24,11 @@ namespace PMS.Infrastructure.Migrations
 
             modelBuilder.Entity("PMS.Core.Models.PatientMedicalRecordDetails", b =>
                 {
-                    b.Property<long>("PatientMedicalRecordID")
+                    b.Property<int>("PatientMedicalRecordID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("PatientMedicalRecordID"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PatientMedicalRecordID"), 1L, 1);
 
                     b.Property<long>("BHTNumber")
                         .HasColumnType("bigint");
