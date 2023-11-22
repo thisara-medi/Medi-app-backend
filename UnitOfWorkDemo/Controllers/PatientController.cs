@@ -64,7 +64,7 @@ namespace UnitOfWorkDemo.Controllers
         {
             var isPatientCreated = await _patientService.CreatePatient(patientDetails);
 
-            if (isPatientCreated)
+            if (isPatientCreated!=null)
             {
                 return Ok(isPatientCreated);
             }

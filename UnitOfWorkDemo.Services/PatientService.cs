@@ -1,4 +1,5 @@
-﻿using PMS.Core.Models.DTO;
+﻿using AutoMapper;
+using PMS.Core.Models.DTO;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -20,14 +21,13 @@ namespace UnitOfWorkDemo.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<bool> CreatePatient(PatientDto patientDetails)
+        public async Task<Patient> CreatePatient(PatientDto patientDetails)
         {
             if (patientDetails != null)
             {
-                int result = -1;
                 try
                 {
-                    await _unitOfWork.Patient.Add(new Patient()
+                    var newPatient = new Patient()
                     {
                         Address = patientDetails.Address,
                         LastName = patientDetails.LastName,
@@ -39,25 +39,30 @@ namespace UnitOfWorkDemo.Services
                         FirstName = patientDetails.FirstName,
                         Gender = patientDetails.Gender,
                         NIC = patientDetails.NIC,
-                        MedicalHistory = patientDetails.MedicalHistory
-                    });
+                        MedicalHistory = patientDetails.MedicalHistory,
+                        insuranceInfomation = patientDetails.insuranceInfomation
+                    };
 
-                     result = _unitOfWork.Save();
+                    await _unitOfWork.Patient.Add(newPatient);
+                    int result = _unitOfWork.Save();
+
+                    if (result > 0)
+                    {
+                        // Mapping the newly created patient to a DTO and returning it
+                        return (newPatient);
+                    }
                 }
                 catch (Exception ex)
                 {
-
+                    // Handle exceptions here
+                    Console.WriteLine(ex.Message);
+                    return new Patient();
                 }
-
-                if (result > 0)
-                    return true;
-                else
-                    return false;
             }
-            return false;
-        }
 
-        public async Task<bool> DeletePatient(int patientId)
+            return new Patient();
+        }
+            public async Task<bool> DeletePatient(int patientId)
         {
             if (patientId > 0)
             {
