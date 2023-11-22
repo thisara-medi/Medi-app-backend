@@ -8,7 +8,9 @@ namespace UnitOfWorkDemo.Core.Interfaces
     {
         IQueryable<PatientMedicalRecordDetails> GetPatientRecordsById(string patientId);
         IQueryable<PatientMedicalRecordDetails> GetPatientRecordsAsQuarable();
+        IQueryable<Reason> GetPatientMedicalRecordReasonList();
         IQueryable<PatientMedicalRecordDetails> GetPatientRecordsByPatientName(string patientName);
         Task<List<PatientMedicalRecordDetails>>GetRecordByPatientId(int patientId);
+        Task<Reason> GetPatientMedicalReasonRecord(int patientId);
     }
 }

@@ -215,5 +215,40 @@ namespace PMS.Endpoints.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpGet("GetPatientMedicalRecord/{reasonId}")]
+        public async Task<IActionResult> GetPatientMedicalRecord(int reasonId)
+        {
+            var patientRecordReasons = await _patientRecordService.GetPatientMedicalReasonRecord(reasonId);
+
+            if (patientRecordReasons != null)
+            {
+                return Ok(patientRecordReasons);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet("GetPatientMedicalRecordReasonList")]
+        public async Task<IActionResult> GetPatientMedicalRecordReasonList()
+        {
+            var patientRecordReasons = await _patientRecordService.GetPatientMedicalRecordReasonList().ToListAsync();
+            if (patientRecordReasons == null)
+            {
+                return NotFound();
+            }
+            // Use JsonSerializerOptions with ReferenceHandler.Preserve
+            var jsonOptions = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            };
+
+            // Serialize the results to JSON
+            var json = JsonConvert.SerializeObject(patientRecordReasons, jsonOptions);
+
+            return Ok(JsonConvert.DeserializeObject<List<Reason>>(json));
+        }
     }
 }
