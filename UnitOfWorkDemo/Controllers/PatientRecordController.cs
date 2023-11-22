@@ -216,8 +216,8 @@ namespace PMS.Endpoints.Controllers
             }
         }
 
-        [HttpGet("GetPatientMedicalRecord/{reasonId}")]
-        public async Task<IActionResult> GetPatientMedicalRecord(int reasonId)
+        [HttpGet("GetPatientMedicalRecordReason/{reasonId}")]
+        public async Task<IActionResult> GetPatientMedicalRecordReason(int reasonId)
         {
             var patientRecordReasons = await _patientRecordService.GetPatientMedicalReasonRecord(reasonId);
 
