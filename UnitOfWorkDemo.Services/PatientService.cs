@@ -125,7 +125,7 @@ namespace UnitOfWorkDemo.Services
                     patient.MedicalHistory = patientDetails.MedicalHistory;
                     patient.Allergic = patientDetails.Allergic;
                     patient.NIC = patientDetails.NIC;
-
+                    patient.insuranceInfomation = patientDetails.insuranceInfomation;
                     _unitOfWork.Patient.Update(patient);
 
                     var result = _unitOfWork.Save();
