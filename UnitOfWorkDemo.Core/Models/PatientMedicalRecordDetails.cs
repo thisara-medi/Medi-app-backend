@@ -29,7 +29,7 @@ namespace PMS.Core.Models
         public string? Surgery { get; set; }
         public string? IndicationForTheSurgery { get; set; }
         public string? IndicationForAdmissionToTheICU { get; set; }
-        public string? TranexamicAcidGivenOrNot { get; set; }
+        public bool? TranexamicAcidGivenOrNot { get; set; }
         public string? PreOpBP_mmHg { get; set; }
         public string? PreOpHR_bpm { get; set; }
         public string? PreOpRR_bpm { get; set; }
@@ -78,12 +78,12 @@ namespace PMS.Core.Models
         public double? Weight_kg { get; set; }
         public double? BMI { get; set; }
         public DateTime? DateofSurgery { get; set; }
-        public string? Hypertension { get; set; }
-        public string? DLD { get; set; }
-        public string? DM { get; set; }
-        public string? Thyroid { get; set; }
+        public bool Hypertension { get; set; }
+        public bool? DLD { get; set; }
+        public bool? DM { get; set; }
+        public bool? Thyroid { get; set; }
         public string? Others { get; set; }
-        public string? IschemicHeartDiseases { get; set; }
+        public bool? IschemicHeartDiseases { get; set; }
         public string? Other1 { get; set; }
         public string? Other2 { get; set; }
         public string? PeripheralNeuropathies { get; set; }
