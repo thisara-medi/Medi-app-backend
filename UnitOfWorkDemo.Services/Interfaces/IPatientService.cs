@@ -10,7 +10,7 @@ namespace UnitOfWorkDemo.Services.Interfaces
 {
     public interface IPatientService
     {
-        Task<bool> CreatePatient(PatientDto patientDetails);
+        Task<Patient> CreatePatient(PatientDto patientDetails);
 
         Task<IEnumerable<Patient>> GetAllpatients();
 
