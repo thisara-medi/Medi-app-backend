@@ -24,13 +24,13 @@ namespace UnitOfWorkDemo.Core.Models
         public string? Gender { get; set; }
 
         [AllowNull]
-        public int? ContactNumber { get; set; }
+        public string? ContactNumber { get; set; }
 
         [AllowNull]
         public string? Address { get; set; }
 
         [AllowNull]
-        public int? EmergencyContactNo { get; set; }
+        public string? EmergencyContactNo { get; set; }
 
         [AllowNull]
         public string? BloodGroup { get; set; }
