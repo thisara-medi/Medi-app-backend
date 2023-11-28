@@ -45,6 +45,9 @@ namespace PMS.Endpoints.Controllers
             return Ok(JsonConvert.DeserializeObject<List<PatientMedicalRecordDetails>>(json));
         }
 
+        //[HttpGet("GetPatientRecordsBySearchString/{searchstring}/{searchType}")]
+        //public async Task<IActionResult> GetPatientRecordsBySearchString(string searchstring, int searchType)
+
         [HttpGet("GetPatientRecordsBySearchString/{searchstring}")]
         public async Task<IActionResult> GetPatientRecordsBySearchString(string searchstring)
         {

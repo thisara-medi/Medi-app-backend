@@ -1,4 +1,5 @@
-﻿using PMS.Core.Models.DTO;
+﻿using PMS.Core.Models;
+using PMS.Core.Models.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,5 +20,7 @@ namespace UnitOfWorkDemo.Services.Interfaces
         Task<bool> UpdatePatient(Patient patientDetails);
 
         Task<bool> DeletePatient(int patientId);
+
+        IQueryable<Patient> GetPatientRecordsAsQuarable();
     }
 }

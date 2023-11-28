@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using PMS.Core.Models;
 using PMS.Core.Models.DTO;
 using System;
 using System.Collections.Generic;
@@ -138,5 +139,14 @@ namespace UnitOfWorkDemo.Services
             }
             return false;
         }
+
+        public IQueryable<Patient> GetPatientRecordsByPatientName(string patientName)
+         => _unitOfWork.Patient.GetPatientByPatientName(patientName);
+
+        public IQueryable<Patient> GetPatientRecordsAsQuarable()
+            => _unitOfWork.Patient.GetPatientAsQuarable();
+
+        public IQueryable<Patient> GetPatientRecordsById(int patientId)
+            => _unitOfWork.Patient.GetPatientById(patientId);
     }
 }
