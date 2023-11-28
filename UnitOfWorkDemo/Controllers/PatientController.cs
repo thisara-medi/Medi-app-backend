@@ -1,7 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using PMS.Core.Models;
 using PMS.Core.Models.DTO;
+using System.Xml.Linq;
 using UnitOfWorkDemo.Core.Models;
+using UnitOfWorkDemo.Services;
 using UnitOfWorkDemo.Services.Interfaces;
 
 namespace UnitOfWorkDemo.Controllers
@@ -116,6 +120,61 @@ namespace UnitOfWorkDemo.Controllers
             {
                 return BadRequest();
             }
+        }
+
+        [HttpGet("GetPatientBySearchString/{searchstring}/{searchId}")]
+        public async Task<IActionResult> GetPatientBySearchString(string searchstring,int searchId)
+        {
+            string[] searchstrings = searchstring.Split(',', '/', '|');
+
+            var patientRecords = _patientService.GetPatientRecordsAsQuarable();
+
+            switch (searchId)
+            {
+                case 0:
+                    patientRecords = patientRecords.Where(x => (x.FirstName + x.LastName).Contains(searchstring));
+                    break;
+                case 1:
+                    patientRecords = patientRecords.Where(x => x.Id.ToString().Contains(searchstring));
+                    break;
+                case 2:
+                    patientRecords = patientRecords.Where(x => x.NIC.Contains(searchstring));
+                    break;
+                
+            }
+
+            //if (searchstrings.Count() >= 1 && !string.IsNullOrWhiteSpace(searchstrings[0]))
+            //{
+            //    var name = searchstrings[0];
+            //    patientRecords = patientRecords.Where(x => (x.FirstName + x.LastName).Contains(name));
+            //}
+
+            //if (searchstrings.Count() >= 2 && !string.IsNullOrWhiteSpace(searchstrings[1]))
+            //{
+            //    var userId = searchstrings[1];
+            //    patientRecords = patientRecords.Where(x => x.ToString().Contains(userId));
+            //}
+
+            //if (searchstrings.Count() >= 3 && !string.IsNullOrWhiteSpace(searchstrings[2]))
+            //{
+            //    patientRecords = patientRecords.Where(x => x.NIC.Contains(searchstrings[2], StringComparison.OrdinalIgnoreCase));
+            //}
+
+            var results = patientRecords.ToList();
+            if (results == null)
+            {
+                return NotFound();
+            }
+            // Use JsonSerializerOptions with ReferenceHandler.Preserve
+            var jsonOptions = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            };
+
+            // Serialize the results to JSON
+            var json = JsonConvert.SerializeObject(results, jsonOptions);
+
+            return Ok(JsonConvert.DeserializeObject<List<Patient>>(json));
         }
     }
 }
