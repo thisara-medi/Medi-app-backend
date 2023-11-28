@@ -14,9 +14,9 @@ namespace UnitOfWorkDemo.Infrastructure.Repositories
 
             public  IQueryable<Patient> GetPatientById(int patientId)
                 => _dbContext.Patients.Where(u => u.Id == patientId);
-            public IQueryable<Patient> GetPatientAsQuarable()
-                => _dbContext.Patients
-                .Include(x => x);
+        public IQueryable<Patient> GetPatientAsQuarable()
+            => _dbContext.Patients;
+                
 
         IQueryable<Patient> IPatientRepository.GetPatientById(int patientId)
         {
