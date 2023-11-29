@@ -119,12 +119,26 @@ namespace UnitOfWorkDemo.Services
             }
             return null;
         }
+        public Task<Reason> GetPatientMedicalReasonRecord(int reasonId)
+        {
+            if (reasonId > 0)
+            {
+                var patientRecordDetails = _unitOfWork.PatientRecord.GetPatientMedicalReasonRecord(reasonId);
+                if (patientRecordDetails != null)
+                {
+                    return patientRecordDetails;
+                }
+            }
+            return null;
+        }
 
         public IQueryable<PatientMedicalRecordDetails> GetPatientRecordsByPatientName(string patientName)
             => _unitOfWork.PatientRecord.GetPatientRecordsByPatientName(patientName);
 
         public IQueryable<PatientMedicalRecordDetails> GetPatientRecordsAsQuarable()
             => _unitOfWork.PatientRecord.GetPatientRecordsAsQuarable();
+        public IQueryable<Reason> GetPatientMedicalRecordReasonList()
+            => _unitOfWork.PatientRecord.GetPatientMedicalRecordReasonList();
 
         public IQueryable<PatientMedicalRecordDetails> GetPatientRecordsById(string patientId)
             => _unitOfWork.PatientRecord.GetPatientRecordsById(patientId);

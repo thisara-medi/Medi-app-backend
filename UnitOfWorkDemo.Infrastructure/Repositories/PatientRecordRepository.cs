@@ -21,5 +21,15 @@ namespace UnitOfWorkDemo.Infrastructure.Repositories
 
         public IQueryable<PatientMedicalRecordDetails> GetPatientRecordsById(string patientId) 
             => _dbContext.PatientRecord.Where(x => x.PatientProfileID.ToString().Contains(patientId));
+
+        IQueryable<Reason> IPatientRecordRepository.GetPatientMedicalRecordReasonList()
+        {
+            return _dbContext.Reasons;
+        }
+
+        async Task<Reason> IPatientRecordRepository.GetPatientMedicalReasonRecord(int reasonId)
+        {
+            return await _dbContext.Reasons.Where(u => u.ReasonID == reasonId).FirstOrDefaultAsync();
+        }
     }
 }

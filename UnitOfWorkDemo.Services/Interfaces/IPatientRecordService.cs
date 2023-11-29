@@ -20,7 +20,9 @@ namespace UnitOfWorkDemo.Services.Interfaces
 
         Task<bool> DeletePatientRecord(int patientRecordId);
         Task<List<PatientMedicalRecordDetails>> GetRecordByPatientId(int patientRecordId);
+        Task<Reason> GetPatientMedicalReasonRecord(int patientRecordId);
 
         IQueryable<PatientMedicalRecordDetails> GetPatientRecordsAsQuarable();
+        IQueryable<Reason> GetPatientMedicalRecordReasonList();
     }
 }

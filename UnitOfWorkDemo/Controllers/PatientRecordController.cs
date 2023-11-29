@@ -45,6 +45,9 @@ namespace PMS.Endpoints.Controllers
             return Ok(JsonConvert.DeserializeObject<List<PatientMedicalRecordDetails>>(json));
         }
 
+        //[HttpGet("GetPatientRecordsBySearchString/{searchstring}/{searchType}")]
+        //public async Task<IActionResult> GetPatientRecordsBySearchString(string searchstring, int searchType)
+
         [HttpGet("GetPatientRecordsBySearchString/{searchstring}")]
         public async Task<IActionResult> GetPatientRecordsBySearchString(string searchstring)
         {
@@ -214,6 +217,41 @@ namespace PMS.Endpoints.Controllers
             {
                 return BadRequest();
             }
+        }
+
+        [HttpGet("GetPatientMedicalRecordReason/{reasonId}")]
+        public async Task<IActionResult> GetPatientMedicalRecordReason(int reasonId)
+        {
+            var patientRecordReasons = await _patientRecordService.GetPatientMedicalReasonRecord(reasonId);
+
+            if (patientRecordReasons != null)
+            {
+                return Ok(patientRecordReasons);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet("GetPatientMedicalRecordReasonList")]
+        public async Task<IActionResult> GetPatientMedicalRecordReasonList()
+        {
+            var patientRecordReasons = await _patientRecordService.GetPatientMedicalRecordReasonList().ToListAsync();
+            if (patientRecordReasons == null)
+            {
+                return NotFound();
+            }
+            // Use JsonSerializerOptions with ReferenceHandler.Preserve
+            var jsonOptions = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            };
+
+            // Serialize the results to JSON
+            var json = JsonConvert.SerializeObject(patientRecordReasons, jsonOptions);
+
+            return Ok(JsonConvert.DeserializeObject<List<Reason>>(json));
         }
     }
 }
