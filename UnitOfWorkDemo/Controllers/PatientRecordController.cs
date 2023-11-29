@@ -1,8 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CsvHelper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using PMS.Core.Models;
+using System.Formats.Asn1;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -89,6 +93,68 @@ namespace PMS.Endpoints.Controllers
             return Ok(JsonConvert.DeserializeObject<List<PatientMedicalRecordDetails>>(json));
         }
 
+        [HttpGet("GetPatientRecordsAsCSV/")]
+        public async Task<IActionResult> GetPatientRecordsAsCSV(string? searchstring)
+        {
+            string[] searchstrings = searchstring!= null ? searchstring.Split(',', '/', '|') : new string[] {};
+
+            var patientRecords = _patientRecordService.GetPatientRecordsAsQuarable();
+
+            if (searchstrings.Count() >= 1 && !string.IsNullOrWhiteSpace(searchstrings[0]))
+            {
+                var name = searchstrings[0];
+                patientRecords = patientRecords.Where(x => (x.PatientProfile.FirstName + x.PatientProfile.LastName).Contains(name));
+            }
+
+            if (searchstrings.Count() >= 2 && !string.IsNullOrWhiteSpace(searchstrings[1]))
+            {
+                var userId = searchstrings[1];
+                patientRecords = patientRecords.Where(x => x.PatientProfileID.ToString().Contains(userId));
+            }
+
+            if (searchstrings.Count() >= 3 && !string.IsNullOrWhiteSpace(searchstrings[2]))
+            {
+                patientRecords = patientRecords.Where(x => x.PatientProfile.NIC.Contains(searchstrings[2], StringComparison.OrdinalIgnoreCase));
+            }
+
+            var results = patientRecords.ToList();
+            if (results == null)
+            {
+                return NotFound();
+            }
+
+            //this is for testing the data
+
+            //var patientRecord = new PatientMedicalRecordDetails() { PatientMedicalRecordID = 1, PatientProfileID = 2, BHTNumber = "12" };
+            //List<PatientMedicalRecordDetails> patientMedicalRecordDetails = new List<PatientMedicalRecordDetails>();
+            //patientMedicalRecordDetails.Add(patientRecord);
+
+            byte[] bin;
+            try
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    using (TextWriter textWriter = new StreamWriter(memoryStream))
+                    using (var csvWriter = new CsvWriter(textWriter, CultureInfo.InvariantCulture))
+                    {
+                        //var ExportModel = _mapper.Map <List<PatientRecordExportDTO>>(results);
+                        csvWriter.WriteRecords(results);
+
+                        //Uncomment below and 136-138 lines, commment above for testings
+                        //csvWriter.WriteRecords(patientMedicalRecordDetails);
+                    }
+
+                    bin = memoryStream.ToArray();
+                }
+            }
+            catch (Exception)
+            {
+
+                return BadRequest();
+            }
+
+            return File(bin, "application/csv", $"Patient-Records{DateTime.UtcNow}.csv");
+        }
 
         [HttpGet("GetPatientRecordsByReason/{reason}")]
         public async Task<IActionResult> GetPatientRecordsByReason(string reason)
