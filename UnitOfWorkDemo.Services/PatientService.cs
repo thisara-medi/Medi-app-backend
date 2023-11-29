@@ -41,8 +41,9 @@ namespace UnitOfWorkDemo.Services
                         Gender = patientDetails.Gender,
                         NIC = patientDetails.NIC,
                         MedicalHistory = patientDetails.MedicalHistory,
-                        insuranceInfomation = patientDetails.insuranceInfomation
-                    };
+                        insuranceInfomation = patientDetails.insuranceInfomation,
+                        isActive = patientDetails.isActive
+                };
 
                     await _unitOfWork.Patient.Add(newPatient);
                     int result = _unitOfWork.Save();
@@ -127,6 +128,7 @@ namespace UnitOfWorkDemo.Services
                     patient.Allergic = patientDetails.Allergic;
                     patient.NIC = patientDetails.NIC;
                     patient.insuranceInfomation = patientDetails.insuranceInfomation;
+                    patient.isActive = patientDetails.isActive;
                     _unitOfWork.Patient.Update(patient);
 
                     var result = _unitOfWork.Save();
