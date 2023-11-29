@@ -20,7 +20,7 @@ namespace PMS.Core.Models
         public virtual Patient? PatientProfile { get; set; }
 
         public PatientCategories PatientTypeID { get; set; }
-        public long BHTNumber { get; set; }
+        public string BHTNumber { get; set; }
 
         [ForeignKey("Reason")]
         public long? ReasonID { get; set; }
