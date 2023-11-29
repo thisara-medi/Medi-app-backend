@@ -44,6 +44,9 @@ namespace UnitOfWorkDemo.Core.Models
         [AllowNull]
         public string? insuranceInfomation { get; set; }
 
+        [AllowNull]
+        public bool? isActive { get; set; } 
+
         public ICollection<PatientMedicalRecordDetails> PatientMedicalRecordDetails { get; set; }
     }
 
