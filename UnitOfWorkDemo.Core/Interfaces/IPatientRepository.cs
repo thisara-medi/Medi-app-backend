@@ -9,6 +9,6 @@ namespace UnitOfWorkDemo.Core.Interfaces
        IQueryable<Patient> GetPatientById(int patientId);
        IQueryable<Patient> GetPatientAsQuarable();
        IQueryable<Patient> GetPatientByPatientName(string patientName);
-       public IEnumerable<GetPatientStatisticsDto> GetPatientStats();
+       public IQueryable<GetPatientStatisticsDto> GetPatientStats();
     }
 }

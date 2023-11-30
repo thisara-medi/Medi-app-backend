@@ -23,6 +23,6 @@ namespace UnitOfWorkDemo.Services.Interfaces
 
         IQueryable<Patient> GetPatientRecordsAsQuarable();
 
-        Task<IEnumerable<GetPatientStatisticsDto>> GetPatientStats();
+        IQueryable<GetPatientStatisticsDto> GetPatientStats();
     }
 }

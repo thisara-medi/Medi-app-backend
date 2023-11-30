@@ -24,10 +24,11 @@ namespace UnitOfWorkDemo.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public IEnumerable<GetPatientStatisticsDto> GetPatientStats()
+        public IQueryable<GetPatientStatisticsDto> GetPatientStats()
         {
 
-            var result = _dbContext.Database.SqlQuery
+            var result = _dbContext.GetPatientStatisticsDto.FromSqlRaw("exec GetPatientStatistics");
+            return result;
 
 
     }

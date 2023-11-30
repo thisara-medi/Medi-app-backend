@@ -177,7 +177,7 @@ namespace UnitOfWorkDemo.Controllers
             return Ok(JsonConvert.DeserializeObject<List<Patient>>(json));
         }
         
-        [HttpPost("GetPatientStats")]
+        [HttpGet("GetPatientStats")]
         public IActionResult GetPatientStats()
         {
             try

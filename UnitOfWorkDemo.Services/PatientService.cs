@@ -152,9 +152,9 @@ namespace UnitOfWorkDemo.Services
         public IQueryable<Patient> GetPatientRecordsById(int patientId)
             => _unitOfWork.Patient.GetPatientById(patientId);
 
-        public Task<IEnumerable<GetPatientStatisticsDto>> GetPatientStats()
+        public IQueryable<GetPatientStatisticsDto> GetPatientStats()
         {
-           return (Task<IEnumerable<GetPatientStatisticsDto>>)_unitOfWork.Patient.GetPatientStats();
+           return _unitOfWork.Patient.GetPatientStats();
         }
     }
 }
