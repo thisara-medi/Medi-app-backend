@@ -176,5 +176,28 @@ namespace UnitOfWorkDemo.Controllers
 
             return Ok(JsonConvert.DeserializeObject<List<Patient>>(json));
         }
+        
+        [HttpPost("GetPatientStats")]
+        public IActionResult GetPatientStats()
+        {
+            try
+            {
+                var patientStats = _patientService.GetPatientStats();
+
+                if (patientStats != null)
+                {
+                    return Ok(patientStats);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or handle it accordingly
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
     }
 }

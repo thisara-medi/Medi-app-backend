@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UnitOfWorkDemo.Infrastructure;
 
@@ -11,9 +12,10 @@ using UnitOfWorkDemo.Infrastructure;
 namespace PMS.Infrastructure.Migrations
 {
     [DbContext(typeof(DbContextClass))]
-    partial class DbContextClassModelSnapshot : ModelSnapshot
+    [Migration("20231130080253_addRegistedDate")]
+    partial class addRegistedDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -501,7 +503,7 @@ namespace PMS.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("RegisteredDate")
+                    b.Property<DateTime?>("RegistedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("insuranceInfomation")
