@@ -1,4 +1,5 @@
 ﻿using PMS.Core.Models;
+using PMS.Core.Models.DTO;
 using UnitOfWorkDemo.Core.Models;
 
 namespace UnitOfWorkDemo.Core.Interfaces
@@ -8,5 +9,6 @@ namespace UnitOfWorkDemo.Core.Interfaces
        IQueryable<Patient> GetPatientById(int patientId);
        IQueryable<Patient> GetPatientAsQuarable();
        IQueryable<Patient> GetPatientByPatientName(string patientName);
+       public IQueryable<GetPatientStatisticsDto> GetPatientStats();
     }
 }

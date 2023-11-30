@@ -42,8 +42,9 @@ namespace UnitOfWorkDemo.Services
                         NIC = patientDetails.NIC,
                         MedicalHistory = patientDetails.MedicalHistory,
                         insuranceInfomation = patientDetails.insuranceInfomation,
-                        isActive = patientDetails.isActive
-                };
+                        isActive = patientDetails.isActive,
+                        RegisteredDate = System.DateTime.Now
+                    };
 
                     await _unitOfWork.Patient.Add(newPatient);
                     int result = _unitOfWork.Save();
@@ -150,5 +151,10 @@ namespace UnitOfWorkDemo.Services
 
         public IQueryable<Patient> GetPatientRecordsById(int patientId)
             => _unitOfWork.Patient.GetPatientById(patientId);
+
+        public IQueryable<GetPatientStatisticsDto> GetPatientStats()
+        {
+           return _unitOfWork.Patient.GetPatientStats();
+        }
     }
 }
