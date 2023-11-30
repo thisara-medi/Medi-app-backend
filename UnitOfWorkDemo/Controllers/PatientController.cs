@@ -135,7 +135,7 @@ namespace UnitOfWorkDemo.Controllers
                     patientRecords = patientRecords.Where(x => (x.FirstName + x.LastName).Contains(searchstring));
                     break;
                 case 1:
-                    patientRecords = patientRecords.Where(x => x.Id.ToString().Contains(searchstring));
+                    patientRecords = patientRecords.Where(x => x.ContactNumber.Contains(searchstring));
                     break;
                 case 2:
                     patientRecords = patientRecords.Where(x => x.NIC.Contains(searchstring));
