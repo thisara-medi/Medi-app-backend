@@ -24,5 +24,6 @@ namespace UnitOfWorkDemo.Services.Interfaces
 
         IQueryable<PatientMedicalRecordDetails> GetPatientRecordsAsQuarable();
         IQueryable<Reason> GetPatientMedicalRecordReasonList();
+        Task<IEnumerable<spPatientMedicalRecords>> GetFilterdPatientRecords(string searchstring, string patientType);
     }
 }

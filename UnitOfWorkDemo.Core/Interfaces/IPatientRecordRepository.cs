@@ -12,5 +12,6 @@ namespace UnitOfWorkDemo.Core.Interfaces
         IQueryable<PatientMedicalRecordDetails> GetPatientRecordsByPatientName(string patientName);
         Task<List<PatientMedicalRecordDetails>>GetRecordByPatientId(int patientId);
         Task<Reason> GetPatientMedicalReasonRecord(int patientId);
+        Task<IEnumerable<spPatientMedicalRecords>> GetFilterdPatientRecords(string searchstring, string patientType);
     }
 }

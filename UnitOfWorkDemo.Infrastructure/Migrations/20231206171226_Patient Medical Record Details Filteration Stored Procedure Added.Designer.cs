@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UnitOfWorkDemo.Infrastructure;
 
@@ -11,9 +12,10 @@ using UnitOfWorkDemo.Infrastructure;
 namespace PMS.Infrastructure.Migrations
 {
     [DbContext(typeof(DbContextClass))]
-    partial class DbContextClassModelSnapshot : ModelSnapshot
+    [Migration("20231206171226_Patient Medical Record Details Filteration Stored Procedure Added")]
+    partial class PatientMedicalRecordDetailsFilterationStoredProcedureAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,8 +53,8 @@ namespace PMS.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("BMI")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<double?>("BMI")
+                        .HasColumnType("float");
 
                     b.Property<string>("BloodLossInTheDrainD1_D2")
                         .HasColumnType("nvarchar(max)");
@@ -123,8 +125,8 @@ namespace PMS.Infrastructure.Migrations
                     b.Property<string>("FatEmbolism_Late")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Height_cm")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<double?>("Height_cm")
+                        .HasColumnType("float");
 
                     b.Property<string>("Hematoma_1st")
                         .HasColumnType("nvarchar(max)");
@@ -429,8 +431,8 @@ namespace PMS.Infrastructure.Migrations
                     b.Property<bool?>("TranexamicAcidGivenOrNot")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Weight_kg")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<double?>("Weight_kg")
+                        .HasColumnType("float");
 
                     b.Property<string>("medicalRecordFileName")
                         .HasColumnType("nvarchar(max)");

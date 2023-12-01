@@ -26,7 +26,7 @@ namespace UnitOfWorkDemo.Infrastructure
         public DbSet<PatientMedicalRecordDetails> PatientRecord { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<GetPatientStatisticsDto> GetPatientStatisticsDto { get; set; }
-
+        public DbSet<spPatientMedicalRecords> spPatientMedicalRecords { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Configuration for GetPatientStatisticsDto
