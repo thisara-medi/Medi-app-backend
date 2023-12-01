@@ -380,6 +380,12 @@ namespace PMS.Core.Models.DTO
         public int? NoofDaysInTheHospital { get; set; }
 
         [AllowNull]
+        public string? MedicalRecordUrl { get; set; }
+
+        [AllowNull]
+        public string? medicalRecordFileName { get; set; }
+
+        [AllowNull]
         public DateTime? CreatedDate { get; set; }
 
         [AllowNull]

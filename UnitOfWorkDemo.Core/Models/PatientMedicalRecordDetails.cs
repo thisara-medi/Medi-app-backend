@@ -142,6 +142,8 @@ namespace PMS.Core.Models
         public string? NoofDaysInTheICU { get; set; }
         public string? EffectivenessInMobilization { get; set; }
         public string? NoofDaysInTheHospital { get; set; }
+        public string? MedicalRecordUrl { get; set; }
+        public string? medicalRecordFileName { get; set; }
         public DateTime? CreatedDate { get; set; }
         public long? CreatedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
