@@ -12,8 +12,8 @@ using UnitOfWorkDemo.Infrastructure;
 namespace PMS.Infrastructure.Migrations
 {
     [DbContext(typeof(DbContextClass))]
-    [Migration("20231127050028_contact number string")]
-    partial class contactnumberstring
+    [Migration("20231202100509_add is active")]
+    partial class addisactive
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,6 +24,23 @@ namespace PMS.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("PMS.Core.Models.DTO.GetPatientStatisticsDto", b =>
+                {
+                    b.Property<int>("ActivePatients")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NewPatientsThisWeek")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NewPatientsToday")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalPatients")
+                        .HasColumnType("int");
+
+                    b.ToTable("GetPatientStatisticsDto");
+                });
+
             modelBuilder.Entity("PMS.Core.Models.PatientMedicalRecordDetails", b =>
                 {
                     b.Property<int>("PatientMedicalRecordID")
@@ -32,8 +49,9 @@ namespace PMS.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PatientMedicalRecordID"), 1L, 1);
 
-                    b.Property<long>("BHTNumber")
-                        .HasColumnType("bigint");
+                    b.Property<string>("BHTNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double?>("BMI")
                         .HasColumnType("float");
@@ -147,6 +165,9 @@ namespace PMS.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("LigametAvulsions")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MedicalRecordUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long?>("ModifiedBy")
@@ -413,6 +434,9 @@ namespace PMS.Infrastructure.Migrations
                     b.Property<double?>("Weight_kg")
                         .HasColumnType("float");
 
+                    b.Property<string>("medicalRecordFileName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("PatientMedicalRecordID");
 
                     b.HasIndex("PatientProfileID");
@@ -502,8 +526,14 @@ namespace PMS.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("RegisteredDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("insuranceInfomation")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("isActive")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

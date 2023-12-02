@@ -5,10 +5,23 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PMS.Infrastructure.Migrations
 {
-    public partial class initial : Migration
+    public partial class addisactive : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "GetPatientStatisticsDto",
+                columns: table => new
+                {
+                    TotalPatients = table.Column<int>(type: "int", nullable: false),
+                    NewPatientsToday = table.Column<int>(type: "int", nullable: false),
+                    NewPatientsThisWeek = table.Column<int>(type: "int", nullable: false),
+                    ActivePatients = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                });
+
             migrationBuilder.CreateTable(
                 name: "Patients",
                 columns: table => new
@@ -20,13 +33,15 @@ namespace PMS.Infrastructure.Migrations
                     DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: true),
                     NIC = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Gender = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ContactNumber = table.Column<int>(type: "int", nullable: true),
+                    ContactNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EmergencyContactNo = table.Column<int>(type: "int", nullable: true),
+                    EmergencyContactNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BloodGroup = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MedicalHistory = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Allergic = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    insuranceInfomation = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    insuranceInfomation = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    isActive = table.Column<bool>(type: "bit", nullable: true),
+                    RegisteredDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -34,7 +49,7 @@ namespace PMS.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Reason",
+                name: "Reasons",
                 columns: table => new
                 {
                     ReasonID = table.Column<long>(type: "bigint", nullable: false)
@@ -43,7 +58,7 @@ namespace PMS.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Reason", x => x.ReasonID);
+                    table.PrimaryKey("PK_Reasons", x => x.ReasonID);
                 });
 
             migrationBuilder.CreateTable(
@@ -68,12 +83,12 @@ namespace PMS.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PatientProfileID = table.Column<int>(type: "int", nullable: false),
                     PatientTypeID = table.Column<int>(type: "int", nullable: false),
-                    BHTNumber = table.Column<long>(type: "bigint", nullable: false),
+                    BHTNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ReasonID = table.Column<long>(type: "bigint", nullable: true),
                     Surgery = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IndicationForTheSurgery = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IndicationForAdmissionToTheICU = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TranexamicAcidGivenOrNot = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TranexamicAcidGivenOrNot = table.Column<bool>(type: "bit", nullable: true),
                     PreOpBP_mmHg = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PreOpHR_bpm = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PreOpRR_bpm = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -122,12 +137,12 @@ namespace PMS.Infrastructure.Migrations
                     Weight_kg = table.Column<double>(type: "float", nullable: true),
                     BMI = table.Column<double>(type: "float", nullable: true),
                     DateofSurgery = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Hypertension = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DLD = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DM = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Thyroid = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Hypertension = table.Column<bool>(type: "bit", nullable: false),
+                    DLD = table.Column<bool>(type: "bit", nullable: true),
+                    DM = table.Column<bool>(type: "bit", nullable: true),
+                    Thyroid = table.Column<bool>(type: "bit", nullable: true),
                     Others = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IschemicHeartDiseases = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IschemicHeartDiseases = table.Column<bool>(type: "bit", nullable: true),
                     Other1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Other2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PeripheralNeuropathies = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -186,6 +201,8 @@ namespace PMS.Infrastructure.Migrations
                     NoofDaysInTheICU = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EffectivenessInMobilization = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NoofDaysInTheHospital = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MedicalRecordUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    medicalRecordFileName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<long>(type: "bigint", nullable: true),
                     ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -204,9 +221,9 @@ namespace PMS.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PatientRecord_Reason_ReasonID",
+                        name: "FK_PatientRecord_Reasons_ReasonID",
                         column: x => x.ReasonID,
-                        principalTable: "Reason",
+                        principalTable: "Reasons",
                         principalColumn: "ReasonID");
                 });
 
@@ -224,6 +241,9 @@ namespace PMS.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "GetPatientStatisticsDto");
+
+            migrationBuilder.DropTable(
                 name: "PatientRecord");
 
             migrationBuilder.DropTable(
@@ -233,7 +253,7 @@ namespace PMS.Infrastructure.Migrations
                 name: "Patients");
 
             migrationBuilder.DropTable(
-                name: "Reason");
+                name: "Reasons");
         }
     }
 }
