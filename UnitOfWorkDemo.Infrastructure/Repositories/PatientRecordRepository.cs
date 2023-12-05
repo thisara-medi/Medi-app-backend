@@ -11,16 +11,19 @@ namespace UnitOfWorkDemo.Infrastructure.Repositories
         public PatientRecordRepository(DbContextClass dbContext) : base(dbContext) { }
 
         public IQueryable<PatientMedicalRecordDetails> GetPatientRecordsByPatientName(string patientName)
-            => _dbContext.PatientRecord.Where(x => (x.PatientProfile.FirstName + x.PatientProfile.LastName).Contains(patientName));
+            => _dbContext.PatientRecord.Where(x => (x.PatientProfile.FirstName + x.PatientProfile.LastName).Contains(patientName)).OrderByDescending(x => x.CreatedDate);
 
         public async Task<List<PatientMedicalRecordDetails>> GetRecordByPatientId(int patientId)
-            => await _dbContext.PatientRecord.Where(u => u.PatientProfileID == patientId).ToListAsync();
+            => await _dbContext.PatientRecord.Where(u => u.PatientProfileID == patientId).OrderByDescending(x => x.CreatedDate).ToListAsync();
+
+
         public IQueryable<PatientMedicalRecordDetails> GetPatientRecordsAsQuarable()
             => _dbContext.PatientRecord
-            .Include(x=> x.PatientProfile);
+            .Include(x => x.PatientProfile)
+            .OrderByDescending(x => x.CreatedDate);
 
-        public IQueryable<PatientMedicalRecordDetails> GetPatientRecordsById(string patientId) 
-            => _dbContext.PatientRecord.Where(x => x.PatientProfileID.ToString().Contains(patientId));
+        public IQueryable<PatientMedicalRecordDetails> GetPatientRecordsById(string patientId)
+            => _dbContext.PatientRecord.Where(x => x.PatientProfileID.ToString().Contains(patientId)).OrderByDescending(x => x.CreatedDate);
 
         IQueryable<Reason> IPatientRecordRepository.GetPatientMedicalRecordReasonList()
         {
