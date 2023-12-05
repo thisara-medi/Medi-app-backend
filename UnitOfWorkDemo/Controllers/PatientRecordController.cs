@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using PMS.Core.Models;
+using PMS.Core.Models.Enum;
 using System.Formats.Asn1;
 using System.Globalization;
 using System.IO;
@@ -203,6 +204,34 @@ namespace PMS.Endpoints.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpGet("GetPatientRecordsByPatientType/{TypeId}")]
+        public async Task<IActionResult> GetPatientRecordsByPatientType(int TypeId)
+        {
+            var patientTypeEnum = (PatientCategories)TypeId;
+            var results = await _patientRecordService.GetPatientRecordsAsQuarable().Where(x => x.PatientTypeID == patientTypeEnum).ToListAsync();
+
+            if (results != null)
+            {
+                // Use JsonSerializerOptions with ReferenceHandler.Preserve
+                var jsonOptions = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                };
+
+                // Serialize the results to JSON
+                var json = JsonConvert.SerializeObject(results, jsonOptions);
+
+                return Ok(JsonConvert.DeserializeObject<List<PatientMedicalRecordDetails>>(json));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+
+
 
         [HttpGet("GetPatientRecordById/{patientRecordId}")]
         public async Task<IActionResult> GetPatientRecordById(int patientId)
