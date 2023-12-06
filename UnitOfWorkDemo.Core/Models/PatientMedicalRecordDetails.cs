@@ -74,9 +74,9 @@ namespace PMS.Core.Models
         public string? PostOpD5WBC { get; set; }
         public string? PostOpD5FBS { get; set; }
         public string? PostOpD5Neutrophil { get; set; }
-        public double? Height_cm { get; set; }
-        public double? Weight_kg { get; set; }
-        public double? BMI { get; set; }
+        public string? Height_cm { get; set; }
+        public string? Weight_kg { get; set; }
+        public string? BMI { get; set; }
         public DateTime? DateofSurgery { get; set; }
         public bool Hypertension { get; set; }
         public bool? DLD { get; set; }
