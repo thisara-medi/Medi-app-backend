@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using PMS.Core.Models;
 using PMS.Core.Models.Enum;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Formats.Asn1;
 using System.Globalization;
 using System.IO;
@@ -50,28 +52,25 @@ namespace PMS.Endpoints.Controllers
             return Ok(JsonConvert.DeserializeObject<List<PatientMedicalRecordDetails>>(json));
         }
 
-        //[HttpGet("GetPatientRecordsBySearchString/{searchstring}/{searchType}")]
-        //public async Task<IActionResult> GetPatientRecordsBySearchString(string searchstring, int searchType)
-
         [HttpGet("GetPatientRecordsBySearchString/{searchstring}")]
         public async Task<IActionResult> GetPatientRecordsBySearchString(string searchstring)
         {
-            string[] searchstrings = searchstring.Split(',','/','|');
+            string[] searchstrings = searchstring.Split(',', '/', '|');
 
             var patientRecords = _patientRecordService.GetPatientRecordsAsQuarable();
-             
-            if (searchstrings.Count()>= 1 && !string.IsNullOrWhiteSpace(searchstrings[0]))
+
+            if (searchstrings.Count() >= 1 && !string.IsNullOrWhiteSpace(searchstrings[0]))
             {
                 var name = searchstrings[0];
                 patientRecords = patientRecords.Where(x => (x.PatientProfile.FirstName + x.PatientProfile.LastName).Contains(name));
             }
-             
+
             if (searchstrings.Count() >= 2 && !string.IsNullOrWhiteSpace(searchstrings[1]))
             {
                 var userId = searchstrings[1];
                 patientRecords = patientRecords.Where(x => x.PatientProfileID.ToString().Contains(userId));
             }
-             
+
             if (searchstrings.Count() >= 3 && !string.IsNullOrWhiteSpace(searchstrings[2]))
             {
                 patientRecords = patientRecords.Where(x => x.PatientProfile.NIC.Contains(searchstrings[2], StringComparison.OrdinalIgnoreCase));
@@ -92,6 +91,24 @@ namespace PMS.Endpoints.Controllers
             var json = JsonConvert.SerializeObject(results, jsonOptions);
 
             return Ok(JsonConvert.DeserializeObject<List<PatientMedicalRecordDetails>>(json));
+        }
+
+        [HttpGet("GetFilterdPatientRecords/")]
+        public async Task<IActionResult> GetFilterdPatientRecords(string? searchstring, string? patientType)
+        {
+            IEnumerable<spPatientMedicalRecords> result = new List<spPatientMedicalRecords>();
+            try
+            {
+                result = await _patientRecordService.GetFilterdPatientRecords(searchstring, patientType);
+            }
+            catch (Exception ex)
+            {
+                #if DEBUG
+                    Debug.WriteLine(ex);
+                #endif
+            }
+
+            return Ok(result);
         }
 
         [HttpGet("GetPatientRecordsAsCSV/")]
@@ -250,8 +267,9 @@ namespace PMS.Endpoints.Controllers
 
 
         [HttpPost("AddPatientRecord")]
-        public async Task<IActionResult> AddPatientRecord(PatientMedicalRecordDetails patientDetails)
+        public async Task<IActionResult> AddPatientRecord([FromBody]PatientMedicalRecordDetails patientDetails)
         {
+
             var isPatientCreated = await _patientRecordService.CreatePatientRecord(patientDetails);
 
             if (isPatientCreated)
