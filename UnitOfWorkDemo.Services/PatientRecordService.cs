@@ -142,5 +142,9 @@ namespace UnitOfWorkDemo.Services
 
         public IQueryable<PatientMedicalRecordDetails> GetPatientRecordsById(string patientId)
             => _unitOfWork.PatientRecord.GetPatientRecordsById(patientId);
+
+        public async Task<IEnumerable<spPatientMedicalRecords>> GetFilterdPatientRecords(string searchstring, string patientType)
+            => await _unitOfWork.PatientRecord.GetFilterdPatientRecords(searchstring, patientType);
+
     }
 }
