@@ -1,9 +1,11 @@
-﻿using CsvHelper;
+﻿using AutoMapper.Execution;
+using CsvHelper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using PMS.Core.Models;
+using PMS.Core.Models.DTO;
 using PMS.Core.Models.Enum;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -111,12 +113,35 @@ namespace PMS.Endpoints.Controllers
             return Ok(result);
         }
 
-        [HttpGet("GetPatientRecordsAsCSV/")]
-        public async Task<IActionResult> GetPatientRecordsAsCSV(string? searchstring)
+        [HttpPost("GetPatientRecordsAsCSV/")]
+        public async Task<IActionResult> GetPatientRecordsAsCSV(RecordSearchParamsDto? recordSearchParams)
         {
-            string[] searchstrings = searchstring!= null ? searchstring.Split(',', '/', '|') : new string[] {};
+            var patientRecords = _patientRecordService.GetPatientRecordsAsQuarable().Include("Reason");
 
-            var patientRecords = _patientRecordService.GetPatientRecordsAsQuarable();
+            if (!string.IsNullOrWhiteSpace(recordSearchParams.reason))
+            {
+                patientRecords = patientRecords.Where(x => x.Reason.ReasonDescription == recordSearchParams.reason);
+            }
+
+          
+            if (!string.IsNullOrWhiteSpace(recordSearchParams.patientType))
+            {
+                PatientCategories PatientCategory = new PatientCategories();
+                int patientTypeid;
+                bool isvalid = int.TryParse(recordSearchParams.patientType, out patientTypeid);
+                if (Enum.TryParse(typeof(PatientCategories), recordSearchParams.patientType, out var patientTypeEnum))
+                {
+                    PatientCategory = (PatientCategories)patientTypeEnum;
+
+                    patientRecords = patientRecords.Where(x => x.PatientTypeID == PatientCategory);
+                }
+               
+            }
+            
+           
+            string[] searchstrings = recordSearchParams.searchstring!= null ? recordSearchParams.searchstring.Split(',', '/', '|') : new string[] {};
+
+           // var patientRecords = _patientRecordService.GetPatientRecordsAsQuarable().Where(x => x.PatientTypeID == PatientCategory);
 
             if (searchstrings.Count() >= 1 && !string.IsNullOrWhiteSpace(searchstrings[0]))
             {
@@ -136,6 +161,7 @@ namespace PMS.Endpoints.Controllers
             }
 
             var results = patientRecords.ToList();
+           
             if (results == null)
             {
                 return NotFound();
