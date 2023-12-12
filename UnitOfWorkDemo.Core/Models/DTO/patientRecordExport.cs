@@ -15,10 +15,10 @@ namespace PMS.Core.Models.DTO
     {
         
            
-            public int PatientMedicalRecordID { get; set; }
+           // public int PatientMedicalRecordID { get; set; }
 
            
-            public int PatientProfileID { get; set; }
+         //   public int PatientProfileID { get; set; }
             [AllowNull]
             public Patient? PatientProfile { get; set; }
             [AllowNull]
