@@ -1,4 +1,5 @@
-﻿using AutoMapper.Execution;
+﻿using AutoMapper;
+using AutoMapper.Execution;
 using CsvHelper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -28,10 +29,12 @@ namespace PMS.Endpoints.Controllers
     public class PatientRecordController : ControllerBase
     {
         public readonly IPatientRecordService _patientRecordService;
+        public IMapper Mapper { get; }
 
-        public PatientRecordController(IPatientRecordService patientRecordService)
+        public PatientRecordController(IPatientRecordService patientRecordService , IMapper mapper)
         {
             this._patientRecordService = patientRecordService;
+            Mapper = mapper;
         }
 
         [HttpGet("GetPatientRecordList")]
@@ -160,12 +163,16 @@ namespace PMS.Endpoints.Controllers
                 patientRecords = patientRecords.Where(x => x.PatientProfile.NIC.Contains(searchstrings[2], StringComparison.OrdinalIgnoreCase));
             }
 
-            var results = patientRecords.ToList();
-           
-            if (results == null)
+
+
+            var exportData = Mapper.Map<List<patientRecordExport>>(patientRecords);
+            
+
+            if (exportData == null)
             {
                 return NotFound();
             }
+
 
             //this is for testing the data
 
@@ -182,7 +189,8 @@ namespace PMS.Endpoints.Controllers
                     using (var csvWriter = new CsvWriter(textWriter, CultureInfo.InvariantCulture))
                     {
                         //var ExportModel = _mapper.Map <List<PatientRecordExportDTO>>(results);
-                        csvWriter.WriteRecords(results);
+                        csvWriter.WriteRecords(exportData);
+                      
 
                         //Uncomment below and 136-138 lines, commment above for testings
                         //csvWriter.WriteRecords(patientMedicalRecordDetails);
