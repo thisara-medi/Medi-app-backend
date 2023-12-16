@@ -165,7 +165,7 @@ namespace PMS.Endpoints.Controllers
 
 
 
-            var exportData = Mapper.Map<List<patientRecordExport>>(patientRecords);
+            var exportData = Mapper.Map<List<patientRecordExport>>(patientRecords.OrderByDescending(x => x.CreatedDate));
             
 
             if (exportData == null)

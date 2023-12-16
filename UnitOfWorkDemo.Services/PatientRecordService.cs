@@ -114,6 +114,7 @@ namespace UnitOfWorkDemo.Services
                 var patientRecordDetails = _unitOfWork.PatientRecord.GetRecordByPatientId(patientRecordId);
                 if (patientRecordDetails != null)
                 {
+                    patientRecordDetails.Result.OrderByDescending(x => x.CreatedDate);
                     return patientRecordDetails;
                 }
             }
